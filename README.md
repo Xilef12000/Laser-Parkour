@@ -1,7 +1,7 @@
 # Laser-Parcour
 Laser Parcour repository
 
-This is the Laser Parcour repository, for the laser parcour project in the cooperation between the Hochschule Heilbronn and the Dillmann-Gymnasium Stuttgart.
+This is the Laser Parcour repository, for the laser parcour project in cooperation between the Hochschule Heilbronn and the Dillmann-Gymnasium Stuttgart.
 
 The content of the old "Read Me.txt"/instructions:
 
