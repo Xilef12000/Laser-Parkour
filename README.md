@@ -2,15 +2,7 @@
 Laser Parcour repository
 
 
-The content of the old "Read Me.txt":
-
-///////////////////////////
-//Laserlab sketch,       //
-//Laserlab test sketch,  //
-//and circuit diagram    //
-//                       //
-//by Manuel König        //
-///////////////////////////
+The content of the old "Read Me.txt"/instructions:
 
 This readme is out of date, but the operation described below should still be the same.
 
