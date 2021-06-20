@@ -8,9 +8,9 @@
 #define penalty 10000 //penalty time for Laser interruption in ms
 #define diods 2 //number of used photodiods
 #define diod_pin 0 //(analog)pin of the first photodiod, normally (analog)pin 0
-#define start_pin 12 // pin of start button, normally pin 13
-#define stop_pin 11 // pin of stop button, normally pin 12
-#define baudrate 9600 // Serial comunication speed/baudrate, normally 9600
+#define start_pin 12 //pin of start button, normally pin 13
+#define stop_pin 11 //pin of stop button, normally pin 12
+#define baudrate 9600 //Serial comunication speed/baudrate, normally 9600
 #define trigger_value 350 //value to trigger
 #define speaker_pin 9 //pin of the speaker
 #define start_beep 400 //tone when start button gets pressed
