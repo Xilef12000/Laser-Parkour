@@ -16,3 +16,10 @@ This readme is out of date, but the operation described below should still be th
 7. upload the adjusted sketch on your arduino
 8. open the Serial monitor under "Tools/Serial Monitor" or by pressing "strg + shift + m"
 9. now test the photodiods
+
+#Current version: 2.1.1:
+
+-parallel photodiode wiring
+-toplist in serial monitor
+-name input via serial monitor
+-penalty time in case of laser interruption
