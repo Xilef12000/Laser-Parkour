@@ -19,7 +19,7 @@ This readme is out of date, but the operation described below should still be th
 
 # Current version: 2.1.1:
 
--parallel photodiode wiring
--toplist in serial monitor
--name input via serial monitor
--penalty time in case of laser interruption
+- parallel photodiode wiring
+- toplist in serial monitor
+- name input via serial monitor
+- penalty time in case of laser interruption
