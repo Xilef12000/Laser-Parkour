@@ -1,7 +1,7 @@
-# Laser-Parcour
-Laser Parcour repository
+# Laser-Parkour
+Laser Parkour repository
 
-This is the Laser Parcour repository, for the laser parcour project in cooperation between the Hochschule Heilbronn and the Dillmann-Gymnasium Stuttgart.
+This is the Laser Parkour repository, for the laser parkour project in cooperation between the Hochschule Heilbronn and the Dillmann-Gymnasium Stuttgart.
 
 How to use the Arduino sketch:
 
