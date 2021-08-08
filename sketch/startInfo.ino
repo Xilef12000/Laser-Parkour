@@ -1,8 +1,6 @@
 void startInfo() {
   Serial.println("\n////////////////////////////////\n//Laser-Parkour sketch        //\n//                            //\n//by Linus Prange             //\n//and Manuel König            //\n////////////////////////////////\n"); //print programm authors
-  for (int i = diod_pin; i <= diod_pin + diods - 1; i++) {
-    Serial.println("using photodiod on pin " + String(i)); //print used photodiod pins
-  }
+  Serial.println("using photo-diode on pin " + String(diodes_pin)); //print used photo-diode pins
   Serial.println(""); //print blank lines
   pinMode(start_pin, INPUT_PULLUP); //define start pin as button-pin
   Serial.println(String(start_pin) + " is now the start-pin"); //print start pin
