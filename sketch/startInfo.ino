@@ -1,5 +1,5 @@
 void startInfo() {
-  Serial.println("\n///////////////////////////\n//Laserlab sketch        //\n//                       //\n//by Linus Prange        //\n//and Manuel König       //\n///////////////////////////\n"); //print programm authors
+  Serial.println("\n////////////////////////////////\n//Laser-Parkour sketch        //\n//                            //\n//by Linus Prange             //\n//and Manuel König            //\n////////////////////////////////\n"); //print programm authors
   for (int i = diod_pin; i <= diod_pin + diods - 1; i++) {
     Serial.println("using photodiod on pin " + String(i)); //print used photodiod pins
   }
