@@ -1,9 +1,9 @@
-///////////////////////////
-//Laserlab sketch        //
-//                       //
-//by Linus Prange        //
-//and Manuel König       //
-///////////////////////////
+////////////////////////////////
+//Laser-Parkour sketch        //
+//                            //
+//by Linus Prange             //
+//and Manuel König            //
+////////////////////////////////
 
 #define penalty 10000 //penalty time for Laser interruption in ms
 #define diods 2 //number of used photodiods

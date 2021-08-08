@@ -1,8 +1,8 @@
-///////////////////////////
-//Laserlab test sketch   //
-//                       //
-//by Manuel König        //
-///////////////////////////
+////////////////////////////////
+//Laser-Parkour test sketch   //
+//                            //
+//by Manuel König             //
+////////////////////////////////
 
 #define diods 2 //number of used photodiods
 #define diod_pin 0 //(analog)pin of the first photodio, normally (analog)pin 0
@@ -10,7 +10,7 @@
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(baudrate);
-  //Serial.println("\n///////////////////////////\n//Laserlab test sketch   //\n//                       //\n//by Manuel König        //\n///////////////////////////\n");
+  //Serial.println("\n////////////////////////////////\n//Laser-Parkour test sketch   //\n//                            //\n//by Manuel König             //\n////////////////////////////////\n");
   for (int i = diod_pin; i <= diod_pin + diods - 1; i++) {
     //Serial.println("using photodiod on pin " + String(i));
   }
