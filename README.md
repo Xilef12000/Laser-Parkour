@@ -22,5 +22,5 @@ How to use the Arduino sketch:
 - penalty time in case of laser interruption
 - start and stop button
 
-# Changes compared to version 2.1.1:
+# Changes compared to version 2.1.2:
 - photo-diodes are now connected in series not parallel as it was in the older versions
