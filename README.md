@@ -15,8 +15,9 @@ How to use the Arduino sketch:
 8. open the Serial monitor under "Tools/Serial Monitor" or by pressing "strg + shift + m"
 9. now test the photodiods
 
-# Current version: 2.1.1:
+# Current version: 2.1.2:
 
+- corrected "parcour" to "parkour"
 - parallel photodiode wiring
 - toplist in serial monitor
 - name input via serial monitor
