@@ -5,8 +5,13 @@
 //and Manuel König            //
 ////////////////////////////////
 
+#include "laserMonitoring.h"
+#include "nameInput.h"
+#include "results.h"
+#include "sort.h"
+#include "startInfo.h"
+
 #define penalty 10000 //penalty time for Laser interruption in ms
-#define diodes 1 //number of used photo-diodes
 #define diodes_pin 0 //(analog)pin of the photo-diodes, normally (analog)pin 0
 #define start_pin 12 //pin of start button, normally pin 13
 #define stop_pin 11 //pin of stop button, normally pin 12
@@ -18,6 +23,7 @@
 #define laser_beep 500 //tone when laser gets interrupted
 #define beep_length 300 //tone length
 
+laser_parkour parkour1;
 
 struct melodyFormat {  //Melody Format
   unsigned int melodyTone;
