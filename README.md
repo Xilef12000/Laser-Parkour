@@ -1,4 +1,5 @@
 # Laser-Parkour
+
 Laser Parkour repository
 
 This is the Laser Parkour repository, for the laser parkour project in cooperation between the Hochschule Heilbronn and the Dillmann-Gymnasium Stuttgart.
@@ -24,3 +25,15 @@ How to use the Arduino sketch:
 - name input via serial monitor
 - penalty time in case of laser interruption
 - start and stop button
+
+# Current version: 3.0:
+
+- photo-diodes are connected in series
+- top-list in serial monitor
+- name input via serial monitor
+- penalty time in case of laser interruption
+- start and stop button
+
+# Changes compared to version 2.1.2:
+
+- photo-diodes are now connected in series not parallel as it was in the older versions

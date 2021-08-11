@@ -1,17 +1,17 @@
-///////////////////////////
-//Laserlab sketch        //
-//                       //
-//by Linus Prange        //
-//and Manuel König       //
-///////////////////////////
+////////////////////////////////
+//Laser-Parkour sketch        //
+//                            //
+//by Linus Prange             //
+//and Manuel König            //
+////////////////////////////////
 
 #define penalty 10000 //penalty time for Laser interruption in ms
-#define diods 2 //number of used photodiods
-#define diod_pin 0 //(analog)pin of the first photodiod, normally (analog)pin 0
+#define diodes 1 //number of used photo-diodes
+#define diodes_pin 0 //(analog)pin of the photo-diodes, normally (analog)pin 0
 #define start_pin 12 //pin of start button, normally pin 13
 #define stop_pin 11 //pin of stop button, normally pin 12
 #define baudrate 9600 //Serial comunication speed/baudrate, normally 9600
-#define trigger_value 350 //value to trigger
+#define trigger_value 180 //value to trigger
 #define speaker_pin 9 //pin of the speaker
 #define start_beep 400 //tone when start button gets pressed
 #define stop_beep 400 //tone when stop button gets pressed
@@ -34,14 +34,12 @@ unsigned long start_time; //start time of a run
 unsigned long stop_time; //stop time of a run
 unsigned long penalty_time; //total penalty time for interrupting Lasers
 void setup() {
-  // put your setup code here, to run once:
   Serial.begin(baudrate); //Start serial comunication
   Serial.setTimeout(10); //timeout for reciving strings in ms
   startInfo(); //print programm and connection infos to the serial monitor
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
   penalty_time = 0; //reseting the total penalty time
   userName = nameInput(); //asking for a user Input
   laserMonitoring(); //monitor the lasers and buttons
