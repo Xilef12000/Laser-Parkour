@@ -16,16 +16,6 @@ How to use the Arduino sketch:
 8. open the Serial monitor under "Tools/Serial Monitor" or by pressing "strg + shift + m"
 9. now test the photo-diodes
 
-# Current version: 2.1.2:
-
-- corrected "parcour" to "parkour"
-- corrected more spelling mistakes
-- parallel photo-diode wiring
-- top-list in serial monitor
-- name input via serial monitor
-- penalty time in case of laser interruption
-- start and stop button
-
 # Current version: 3.0:
 
 - photo-diodes are connected in series
