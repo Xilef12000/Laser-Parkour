@@ -6,7 +6,6 @@
 ////////////////////////////////
 
 #define penalty 10000 //penalty time for Laser interruption in ms
-#define diodes 1 //number of used photo-diodes
 #define diodes_pin 0 //(analog)pin of the photo-diodes, normally (analog)pin 0
 #define start_pin 12 //pin of start button, normally pin 13
 #define stop_pin 11 //pin of stop button, normally pin 12
