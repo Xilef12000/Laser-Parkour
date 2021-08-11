@@ -34,14 +34,12 @@ unsigned long start_time; //start time of a run
 unsigned long stop_time; //stop time of a run
 unsigned long penalty_time; //total penalty time for interrupting Lasers
 void setup() {
-  // put your setup code here, to run once:
   Serial.begin(baudrate); //Start serial comunication
   Serial.setTimeout(10); //timeout for reciving strings in ms
   startInfo(); //print programm and connection infos to the serial monitor
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
   penalty_time = 0; //reseting the total penalty time
   userName = nameInput(); //asking for a user Input
   laserMonitoring(); //monitor the lasers and buttons
