@@ -6,6 +6,9 @@
 ////////////////////////////////
 
 #include "laser_parkour.h"
+laser_parkour parkour;
+#include "sort_algorithm.h"
+sort_algorithm sort;
 
 #define diodes_pin 0 //(analog)pin of the photo-diodes, normally (analog)pin 0
 #define start_pin 12 //pin of start button, normally pin 13
@@ -15,7 +18,6 @@
 
 #define baudrate 9600 //Serial comunication speed/baudrate, normally 9600
 
-laser_parkour parkour;
 void started() {
   Serial.println("start");
 }
@@ -38,7 +40,8 @@ void setup() {
   parkour.onstop(stopped);
   //this function gets called on the interruptionof a laser:
   parkour.onfail(failed);
-
+  //initialize the control-system;
+  parkour.begin();
 
 
 }
@@ -46,7 +49,7 @@ void setup() {
 void loop() {
   delay(2000);
   Serial.println("\nNew Game:");
-  parkour.game();
+  Serial.println(parkour.game());
   //delay(10000);
   //exit(0);
 }
