@@ -5,8 +5,9 @@ class sort_algorithm {
       String name;
     };
     void bubble() {
+    //userdata bubble(userdata topList) {
       //this is an bubble-sort-algorithm
       //visit https://de.wikipedia.org/wiki/Bubblesort for more infos
 
     }
-}
+};
