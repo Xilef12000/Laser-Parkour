@@ -5,6 +5,7 @@ This is the Laser Parkour repository, for the laser parkour project in cooperati
 
 How to use the Arduino sketch:
 
+0. **for the first use of a esp32 you have to install the necessary Board Manager by Pressing Strg + , on your keyboard and then adding https://dl.espressif.com/dl/package_esp32_index.json to the "Additional Boards Manager URLs" field**
 1. to use "sketch"and "test_sketch", build the circuit named "wiring diagram"
 2. upload "test_sketch" on your Arduino
 3. open the Serial plotter under "Tools/Serial Plotter" or by pressing "strg + shift + l"
