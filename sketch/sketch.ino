@@ -1,16 +1,9 @@
-/*
-  ESP32 Web Server - AP Mode
-  modified on 25 MAy 2019
-  by Mohammadreza Akbari @ Electropeak
-  Home
-*/
-
 #include <WiFi.h>
 #include <WebServer.h>
 
 // SSID & Password
-const char* ssid = "Electripeak";  // Enter your SSID here
-const char* password = "123456789";  //Enter your Password here
+const char* ssid = "LaserParkour";  // Enter your SSID here
+const char* password = "testpw";  //Enter your Password here
 
 // IP Address details
 IPAddress local_ip(192, 168, 1, 1);
@@ -43,14 +36,10 @@ void loop() {
 }
 
 // HTML & CSS contents which display on web server
-String HTML = "<!DOCTYPE html>\
-<html>\
-<body>\
-<h1>My First Web Server with ESP32 - AP Mode &#128522;</h1>\
-</body>\
-</html>";
+String HTML = "<!DOCTYPE html>  <html>   <head>    <meta charset='utf-8'>    <title>Name Input</title>   </head>   <body>    <form action='/'>     New Player:     <br>     <input type='test' name='name'>     <input type='submit' name='submit'>    </form>   </body>  </html>";
 
 // Handle root url (/)
 void handle_root() {
+  Serial.println(server.arg("name"));
   server.send(200, "text/html", HTML);
 }
