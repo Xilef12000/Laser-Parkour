@@ -11,7 +11,6 @@ IPAddress gateway(192, 168, 1, 1);
 IPAddress subnet(255, 255, 255, 0);
 
 WebServer server(80);  // Object of WebServer(HTTP port, 80 is defult)
-
 void setup() {
   Serial.begin(115200);
 
