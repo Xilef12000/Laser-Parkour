@@ -17,21 +17,21 @@ void setup() {
   Serial.begin(115200);
 
   TEXT.replace("\n","\\n");
-  Serial.println(TEXT);
+  //Serial.println(TEXT);
 
   // Create SoftAP
   WiFi.softAP(ssid, password);
   WiFi.softAPConfig(local_ip, gateway, subnet);
 
 
-  Serial.print("Connect to My access point: ");
-  Serial.println(ssid);
+  //Serial.print("Connect to My access point: ");
+  //Serial.println(ssid);
 
   server.on("/", handle_root);
  server.on("/table", handle_table);
 
   server.begin();
-  Serial.println("HTTP server started");
+  //Serial.println("HTTP server started");
   delay(100);
 }
 
@@ -43,7 +43,7 @@ void loop() {
       TEXT += Serial.readString();
     }*/
     TEXT.replace("\n","\\n");
-    Serial.println("New Text: " + TEXT + ";");
+    //Serial.println("New Text: " + TEXT + ";");
   }
 }
 
@@ -53,10 +53,11 @@ String TABLE_1 = "<!DOCTYPE html>  <html>   <head>    <meta charset='utf-8'>    
 String TABLE_2 = "';     document.getElementById('Top').innerHTML = list;    </script>   </body>  </html>";
 // Handle root url (/)
 void handle_root() {
-  Serial.println("got name: " + server.arg("name") + ";");
+  //Serial.println("got name: " + server.arg("name") + ";");
+  Serial.println(server.arg("name"));
   server.send(200, "text/html", HTML);
 }
 void handle_table() {
-    Serial.println("send Text: " + TEXT + ";");
+    //Serial.println("send Text: " + TEXT + ";");
   server.send(200, "text/html", String(TABLE_1) + String(TEXT) + String(TABLE_2));
 }
