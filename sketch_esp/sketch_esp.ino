@@ -14,7 +14,7 @@ WebServer server(80);  // Object of WebServer(HTTP port, 80 is defult)
 
 String TEXT = "no \n data";
 void setup() {
-  Serial.begin(115200);
+  Serial.begin(9600);
 
   TEXT.replace("\n","\\n");
   //Serial.println(TEXT);
