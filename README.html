@@ -982,31 +982,175 @@ body .markdown-body {
 </style><title>README</title></head><body><article class="markdown-body"><h1>
 <a id="user-content-laser-parkour" class="anchor" href="#laser-parkour" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Laser-Parkour</h1>
 <p>Laser Parkour repository</p>
+<h2>
+<a id="user-content-this-is-a-preview-version-it-may-has-bugs" class="anchor" href="#this-is-a-preview-version-it-may-has-bugs" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>This is a Preview-Version, it may has bugs</h2>
 <p>This is the Laser Parkour repository, for the laser parkour project in cooperation between the Hochschule Heilbronn and the Dillmann-Gymnasium Stuttgart.</p>
-<p>How to use the Arduino sketch:</p>
+<p>How to use the Laser-Parkour sketch:</p>
 <ol start="0">
-<li><strong>for the first use of a esp32 you have to install the necessary Board Manager by Pressing Strg + , on your keyboard and then adding <a href="https://dl.espressif.com/dl/package_esp32_index.json" rel="nofollow">https://dl.espressif.com/dl/package_esp32_index.json</a> to the "Additional Boards Manager URLs" field</strong></li>
-<li>to use "sketch"and "test_sketch", build the circuit named "wiring diagram"</li>
-<li>upload "test_sketch" on your Arduino</li>
-<li>open the Serial plotter under "Tools/Serial Plotter" or by pressing "strg + shift + l"</li>
-<li>now interrupt the light shining on the photo-diodes, and look for a trigger value wich is good for both diodes.</li>
-<li>open "sketch"</li>
-<li>read the definitions in the sketch careful, and adjust them for your needs</li>
-<li>upload the adjusted sketch on your Arduino</li>
-<li>open the Serial monitor under "Tools/Serial Monitor" or by pressing "strg + shift + m"</li>
-<li>now test the photo-diodes</li>
+<li>
+<p><strong>for the first use of a esp32 you have to install the necessary Board Manager by Pressing Strg + , on your keyboard and then adding <a href="https://dl.espressif.com/dl/package_esp32_index.json" rel="nofollow">https://dl.espressif.com/dl/package_esp32_index.json</a> to the "Additional Boards Manager URLs" field.<br>
+For this action and for the first time you flash the esp23 a Internet-connection is necessary.</strong></p>
+</li>
+<li>
+<p>build the circuit displayed in the file "wiring diagram.pdf"</p>
+</li>
+<li>
+<p>if you don't know the correct values for your used parts, find them out by using the "test_sketch":</p>
+<ol>
+<li>
+<p>open the "test_sketch.ino" sketch</p>
+</li>
+<li>
+<p>Set the correct settings under "Tools" for the Arduino:</p>
+<table>
+<thead>
+<tr>
+<th>Settings:</th>
+<th>Arduino Uno:</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Board:</td>
+<td>"Arduino Uno"</td>
+</tr>
+<tr>
+<td>Port:</td>
+<td>your Port</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>upload the sketch to your Arduino<br>
+<strong>!!!IMPORTANT: to upload the sketch disconnect any wires from the TX and RX pins!!!</strong></p>
+</li>
+<li>
+<p>open the Serial plotter under "Tools/Serial Plotter" or by pressing "strg + shift + l"</p>
+</li>
+<li>
+<p>now interrupt the light shining on the photo-diodes, and look for a trigger value which is good for all diodes.</p>
+</li>
+</ol>
+</li>
+<li>
+<p>open the "sketch.ino" sketch</p>
+</li>
+<li>
+<p>read the definitions in the sketch careful, and adjust them for your needs</p>
+</li>
+<li>
+<p>upload the adjusted sketch on your Arduino</p>
+<table>
+<thead>
+<tr>
+<th>Settings:</th>
+<th>Arduino Uno:</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Board:</td>
+<td>"Arduino Uno"</td>
+</tr>
+<tr>
+<td>Port:</td>
+<td>your Port</td>
+</tr>
+</tbody>
+</table>
+<p><strong>!!!IMPORTANT: to upload the sketch disconnect any wires from the TX and RX pins!!!</strong></p>
+</li>
+<li>
+<p>open the "sketch_esp.ino" sketch</p>
+</li>
+<li>
+<p>if your want, change the ssid and password</p>
+</li>
+<li>
+<p>Set the correct settings under "Tools" for the ESP32:</p>
+<table>
+<thead>
+<tr>
+<th>Settings:</th>
+<th>ESP32:</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Board:</td>
+<td>"ESP32 Dev Module"</td>
+</tr>
+<tr>
+<td>Upload Speed:</td>
+<td>"921600"</td>
+</tr>
+<tr>
+<td>CPU Frequency:</td>
+<td>"240MHz (WIFI/BT)"</td>
+</tr>
+<tr>
+<td>Flash Frequency:</td>
+<td>"80MHz"</td>
+</tr>
+<tr>
+<td>Flash Mode:</td>
+<td>"QIO"</td>
+</tr>
+<tr>
+<td>Flash Size:</td>
+<td>"4MB (32Mb)"</td>
+</tr>
+<tr>
+<td>Partition Scheme:</td>
+<td>"Default 4MB with spiffs (1.2MB APP/1.5MB SPIFFS)"</td>
+</tr>
+<tr>
+<td>Core Debug Level:</td>
+<td>"None"</td>
+</tr>
+<tr>
+<td>PSRAM:</td>
+<td>"Disabled"</td>
+</tr>
+<tr>
+<td>Port:</td>
+<td>your Port</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>upload the sketch to your esp32
+<strong>!!!IMPORTANT: to upload the sketch disconnect any wires from the TX and RX pins!!!</strong></p>
+</li>
+<li>
+<p>reconnect the RX and TX pins correctly</p>
+</li>
+<li>
+<p>restart the esp32 and Arduino by disconnecting both from the power-supply/USB-Port and then reconnecting them</p>
+</li>
+<li>
+<p>connect to the Hotspot of the esp32</p>
+</li>
+<li>
+<p>open the webpage <a href="http://192.168.1.1" rel="nofollow">http://192.168.1.1</a> for the name-input-page or the webpage <a href="http://192.168.1.1/table" rel="nofollow">http://192.168.1.1/table</a> for only the Top-10 table</p>
+</li>
+<li>
+<p>use the Laser-Parkour...</p>
+</li>
 </ol>
 <h1>
-<a id="user-content-current-version-" class="anchor" href="#current-version-" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Current version: ?:</h1>
+<a id="user-content-current-version-pre-40" class="anchor" href="#current-version-pre-40" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Current version: pre-4.0:</h1>
 <ul>
 <li>photo-diodes are connected in series</li>
-<li>top-list in web interface</li>
-<li>name input via web interface</li>
+<li>top-list in web-interface</li>
+<li>name input via web-interface</li>
 <li>penalty time in case of laser interruption</li>
 <li>start and stop button</li>
 </ul>
 <h1>
-<a id="user-content-changes-compared-to-version-30" class="anchor" href="#changes-compared-to-version-30" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Changes compared to version 3.0:</h1>
+<a id="user-content-changes-compared-to-version-301" class="anchor" href="#changes-compared-to-version-301" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Changes compared to version 3.0.1:</h1>
 <ul>
 <li>Interaction with the Arduino via web-interface hosted on a esp32</li>
 </ul>
