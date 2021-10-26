@@ -1,6 +1,7 @@
 void laserMonitoring() {
   while (digitalRead(start_pin) == 1) {} //wait for start button to get pressed
   start_time = millis(); //safe start time
+  digitalWrite(LED_BUILTIN, HIGH);
   noTone(speaker_pin); //stop all tones
   tone(speaker_pin, start_beep, beep_length); //play start tone
   //Serial.println("laserMonitoring: start-button got pressed at " + String(start_time) + "ms"); //print start time
@@ -14,6 +15,7 @@ void laserMonitoring() {
     }
   } //if stop button got pressed
   stop_time = millis(); //save stop time
+  digitalWrite(LED_BUILTIN, LOW);
   noTone(speaker_pin); //stop all tones
   tone(speaker_pin, stop_beep, beep_length); //play stop tone
   //Serial.println("laserMonitoring: stop-button got pressed at " + String(stop_time) + "ms");//print stop time

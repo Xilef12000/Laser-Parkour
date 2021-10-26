@@ -34,7 +34,7 @@ unsigned long stop_time; //stop time of a run
 unsigned long penalty_time; //total penalty time for interrupting Lasers
 void setup() {
   Serial.begin(baudrate); //Start serial comunication
-  Serial.setTimeout(10); //timeout for reciving strings in ms
+  //Serial.setTimeout(10); //timeout for reciving strings in ms
   startInfo(); //print programm and connection infos to the serial monitor
 }
 
