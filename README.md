@@ -65,7 +65,7 @@ For this action and for the first time you flash the esp23 a Internet-connection
 - penalty time in case of laser interruption
 - start and stop button
 
-# Changes compared to version 3.0.1:
+# Changes compared to version 3.1.1:
 - Interaction with the Arduino via web-interface hosted on a esp32
 
 
