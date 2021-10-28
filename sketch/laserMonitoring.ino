@@ -10,7 +10,7 @@ void laserMonitoring() {
       penalty_time = penalty_time + penalty; //add penalty time
       noTone(speaker_pin); //stop all tones
       tone(speaker_pin, laser_beep, beep_length); //play laser interruption tone
-      while (analogRead(diodes_pin) >= trigger_value) {} //wait for laser to be not interrupted
+      while (analogRead(diodes_pin) >= trigger_value && digitalRead(stop_pin) == 1) {} //wait for laser to be not interrupted
     }
   } //if stop button got pressed
   stop_time = millis(); //save stop time
