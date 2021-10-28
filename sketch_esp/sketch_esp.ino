@@ -52,7 +52,7 @@ void loop() {
 // HTML & CSS contents which display on web server
 String HTML = "<!DOCTYPE html>  <html>   <head>    <meta charset='utf-8'>    <title>Name Input</title>   </head>   <body>    <form action='/'>     New Player:     <br>     <input type='test' name='name'>     <input type='submit' name='submit'>    </form>    <iframe src='/table'></iframe>   </body>  </html>";
 String TABLE_1 = "<!DOCTYPE html>  <html>   <head>    <meta charset='utf-8'>    <title>Top-table</title>    <META HTTP-EQUIV='refresh' CONTENT='5'>   </head>   <body>    <p id='Top'>ERROR: NO USEFULL DATA</p>    <script type='text/javascript'>     var list = '";
-String TABLE_2 = "';     document.getElementById('Top').innerHTML = list;    </script>   </body>  </html>";
+String TABLE_2 = "';     list = list.replace(/;/g, '<br>');document.getElementById('Top').innerHTML = list;    </script>   </body>  </html>";
 // Handle root url (/)
 void handle_root() {
   //Serial.println("got name: " + server.arg("name") + ";");

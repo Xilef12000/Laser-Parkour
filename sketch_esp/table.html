@@ -8,7 +8,8 @@
 		<body>
 			<p id="Top">test</p>
 			<script type="text/javascript">
-				var list = "";
+				var list = "ERROR: NO USEFULL DATA";
+				list = list.replace(/;/g, "<br>");
 				document.getElementById("Top").innerHTML = list;
 			</script>
 		</body>
