@@ -16,7 +16,7 @@ How to use the Arduino sketch:
 8. open the Serial monitor under "Tools/Serial Monitor" or by pressing "strg + shift + m"
 9. now test the photo-diodes
 
-# Current version: 3.1.1:
+# Current version: 3.1:
 
 - photo-diodes are connected in series
 - top-list in serial monitor
