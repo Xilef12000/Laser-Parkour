@@ -16,7 +16,8 @@ String TEXT = "no Top-list";
 void setup() {
   Serial.begin(9600);
 
-  TEXT.replace("\n","");
+  //TEXT.replace("\n","");
+  TEXT.trim();
   //Serial.println(TEXT);
 
   // Create SoftAP
@@ -42,7 +43,8 @@ void loop() {
     /*while (Serial.available() > 0){
       TEXT += Serial.readString();
     }*/
-    TEXT.replace("\n","");
+    //TEXT.replace("\n","");
+    TEXT.trim();
     //Serial.println("New Text: " + TEXT + ";");
   }
 }
@@ -54,7 +56,9 @@ String TABLE_2 = "';     document.getElementById('Top').innerHTML = list;    </s
 // Handle root url (/)
 void handle_root() {
   //Serial.println("got name: " + server.arg("name") + ";");
-  Serial.println(server.arg("name"));
+  String NAME = server.arg("name");
+  NAME.trim();
+  Serial.print(NAME);
   server.send(200, "text/html", HTML);
 }
 void handle_table() {

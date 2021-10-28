@@ -10,14 +10,16 @@ void results(unsigned long results_start_time, unsigned long results_stop_time, 
   String TEXT = "";
   for (int i = 0; i < 10; i++) { //print Top 10 one by one
     //Serial.println("Place " + String(i + 1) + ": " +  String(userdata[i].userdataTime) + " : " + String(userdata[i].userdataName)); //print Top 10
-    TEXT += "Place " + String(i + 1) + ": " +  String(userdata[i].userdataTime) + " : " + String(userdata[i].userdataName + " ; ");
+    //TEXT += "Place " + String(i + 1) + ": " +  String(userdata[i].userdataTime) + " : " + String(userdata[i].userdataName) + " ; ";
+    TEXT += String(userdata[i].userdataName) + ": " + String(userdata[i].userdataTime) + "; ";
   }
-  TEXT.replace("\n","");
-  delay(1000);
+  //TEXT.replace("\n","");
+  TEXT.trim();
+  /*delay(1000);
   digitalWrite(LED_BUILTIN, HIGH);
   delay(1000);
-  digitalWrite(LED_BUILTIN, LOW);
-  Serial.println(TEXT);
+  digitalWrite(LED_BUILTIN, LOW);*/
+  Serial.print(TEXT);
   //Serial.print("\n\n\n\n\n"); //print blank lines
   for (int i = 0; i < 10; i++) { //check if currrent is in Top 10 one by yone
     if (userdata[i].userdataName == userName) { //if currrent is in Top 10
