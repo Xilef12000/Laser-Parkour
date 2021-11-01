@@ -5,7 +5,7 @@
 
 // SSID & Password
 const char* ssid = "LaserParkour";  // Enter your SSID here
-const char* password = "testpw";  //Enter your Password here
+const char* password = "testpassword";  //Enter your Password here (it must be et leased  eight characters long)
 
 // IP Address details
 IPAddress local_ip(192, 168, 1, 1); //192.168.1.1
@@ -29,12 +29,12 @@ void setup() {
     HTML += (char)myFile.read();
   }
   myFile.close();
-  myFile = SD.open("/table 1.htm", FILE_READ);
+  myFile = SD.open("/table1.htm", FILE_READ);
   while (myFile.available()) {
     TABLE_1 += (char)myFile.read();
   }
   myFile.close();
-  myFile = SD.open("/name 2.htm", FILE_READ);
+  myFile = SD.open("/table2.htm", FILE_READ);
   while (myFile.available()) {
     TABLE_2 += (char)myFile.read();
   }
@@ -51,6 +51,7 @@ void setup() {
 
   server.on("/", handle_root);
   server.on("/table.htm", handle_table);
+  server.on("/table", handle_table);
 
   server.begin();
   //Serial.println("HTTP server started");
