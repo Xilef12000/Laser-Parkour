@@ -3,6 +3,7 @@
 		<head>
 			<meta charset="utf-8">
 			<title>Top-table</title>
+			<link rel="stylesheet" type="text/css" href="table.css">
 			<META HTTP-EQUIV="refresh" CONTENT="5">
 		</head>
 		<body>
@@ -24,9 +25,21 @@
 			</table>
 			<p id="Top">test</p>
 			<script type="text/javascript">
-				var list = "ERROR: NO USEFULL DATA";
-				list = list.replace(/;/g, "<br>");
-				document.getElementById("Top").innerHTML = list;
+				setInterval(load_json, 3000);
+
+
+				var xmlhttp = new XMLHttpRequest();
+				var url = "/table.json";
+
+				xmlhttp.onreadystatechange = function() {
+					if (this.readyState == 4 && this.status == 200) {
+						var json = JSON.parse(this.responseText);
+						console.log(json.place1.name);
+					}
+				};
+				xmlhttp.open("GET", url, true);
+				xmlhttp.send();
+
 			</script>
 		</body>
 	</html>
