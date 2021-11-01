@@ -51,7 +51,6 @@ void setup() {
 
   server.on("/", handle_root);
   server.on("/table.htm", handle_table);
-  server.on("/table", handle_table);
 
   server.begin();
   //Serial.println("HTTP server started");
