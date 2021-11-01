@@ -53,10 +53,10 @@ For this action and for the first time you flash the esp23 a Internet-connection
 9. upload the sketch to your esp32
 	**!!!IMPORTANT: to upload the sketch disconnect any wires from the TX and RX pins!!!**
 10. reconnect the RX and TX pins correctly
-11. **NEW: upload the files from the folder "web-page" to the SD-Card, and put in in the ESP32**
+11. **!NEW: upload the files from the folder "web-page" to the SD-Card, and put in in the ESP32**
 12. restart the esp32 and Arduino by disconnecting both from the power-supply/USB-Port and then reconnecting them
 13. connect to the Hotspot of the esp32
-14. open the webpage http://192.168.1.1 for the name-input-page or the webpage http://192.168.1.1/table for only the Top-10 table
+14. open the webpage http://192.168.1.1 for the name-input-page or the webpage **!NEW: http://192.168.1.1/table.htm** for only the Top-10 table
 15. use the Laser-Parkour...
 
 # Current version: pre-4.0:
