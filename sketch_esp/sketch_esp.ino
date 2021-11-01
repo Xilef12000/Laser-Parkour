@@ -15,26 +15,31 @@ IPAddress subnet(255, 255, 255, 0);
 WebServer server(80);  // Object of WebServer(HTTP port, 80 is defult)
 File myFile;
 
-// HTML & CSS contents which display on web server
 String HTML = "";
-String TABLE_1 = "<!DOCTYPE html>  <html>   <head>    <meta charset='utf-8'>    <title>Top-table</title>    <META HTTP-EQUIV='refresh' CONTENT='5'>   </head>   <body>    <p id='Top'>ERROR: NO USEFULL DATA</p>    <script type='text/javascript'>     var list = '";
-String TABLE_2 = "';     list = list.replace(/;/g, '<br>');document.getElementById('Top').innerHTML = list;    </script>   </body>  </html>";
+String TABLE_1 = "";
+String TABLE_2 = "";
 String TEXT = "no Top-list";
 void setup() {
   Serial.begin(9600);
   if (!SD.begin(5)) {
-    Serial.println("initialization failed!");
     while (1);
   }
-  Serial.println("initialization done.");
   myFile = SD.open("/name.htm", FILE_READ);
   while (myFile.available()) {
     HTML += (char)myFile.read();
   }
   myFile.close();
-  //TEXT.replace("\n","");
+  myFile = SD.open("/table 1.htm", FILE_READ);
+  while (myFile.available()) {
+    TABLE_1 += (char)myFile.read();
+  }
+  myFile.close();
+  myFile = SD.open("/name 2.htm", FILE_READ);
+  while (myFile.available()) {
+    TABLE_2 += (char)myFile.read();
+  }
+  myFile.close();
   TEXT.trim();
-  //Serial.println(TEXT);
 
   // Create SoftAP
   WiFi.softAP(ssid, password);
