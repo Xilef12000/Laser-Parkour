@@ -1,4 +1,4 @@
-#Inventory:
+Inventory:
 
 | part:         | existing: | expected: |
 |---------------|-----------|-----------|
