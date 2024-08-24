@@ -1499,7 +1499,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Buzzer:WR-MJ Modular Jack Horizontal Shielded w. EMI Panel Finger 8P8C Tab Up"
+		(property "Footprint" "Library:WR-MJ Modular Jack Horizontal Shielded w. EMI Panel Finger 8P8C Tab Up"
 			(at 121.92 64.135 90)
 			(effects
 				(font

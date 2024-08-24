@@ -1641,7 +1641,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Sensor:WR-MJ Modular Jack Horizontal Shielded w. EMI Panel Finger 8P8C Tab Up"
+		(property "Footprint" "Library:WR-MJ Modular Jack Horizontal Shielded w. EMI Panel Finger 8P8C Tab Up"
 			(at 142.24 56.515 90)
 			(effects
 				(font
@@ -2828,7 +2828,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Sensor:WR-MJ Modular Jack Horizontal Shielded w. EMI Panel Finger 8P8C Tab Up"
+		(property "Footprint" "Library:WR-MJ Modular Jack Horizontal Shielded w. EMI Panel Finger 8P8C Tab Up"
 			(at 142.24 83.185 90)
 			(effects
 				(font

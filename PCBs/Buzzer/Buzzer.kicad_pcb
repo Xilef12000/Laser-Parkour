@@ -718,16 +718,16 @@
 			)
 		)
 	)
-	(footprint "Buzzer:WR-MJ Modular Jack Horizontal Shielded w. EMI Panel Finger 8P8C Tab Up"
+	(footprint "Library:WR-MJ Modular Jack Horizontal Shielded w. EMI Panel Finger 8P8C Tab Up"
 		(layer "F.Cu")
 		(uuid "68130606-b6b0-4e43-b0d7-c669ca327e33")
 		(at 81.585 75.15 90)
 		(descr "WR-MJ Modular Jack Horizontal Shielded w. EMI Panel Finger 8P8C Tab Up")
 		(property "Reference" "J1"
-			(at -8.2675 -9.0425 90)
+			(at 10.1925 -6.485 90)
 			(unlocked yes)
 			(layer "F.SilkS")
-			(uuid "421d857a-a3e4-4bde-815b-d66f100e453a")
+			(uuid "4637abcd-57bf-48ba-8d98-fd0e1b47ad17")
 			(effects
 				(font
 					(size 1.1684 1.1684)
@@ -737,10 +737,10 @@
 			)
 		)
 		(property "Value" "RJ45"
-			(at -8.35 -6.585 90)
+			(at 10.11 -4.0275 90)
 			(unlocked yes)
 			(layer "F.Fab")
-			(uuid "444467f9-43c3-40e4-be06-b32ea60af6f3")
+			(uuid "dac12c37-dcf8-4709-b469-89f300e86033")
 			(effects
 				(font
 					(size 1.1684 1.1684)
@@ -749,11 +749,11 @@
 				(justify left bottom)
 			)
 		)
-		(property "Footprint" "Buzzer:WR-MJ Modular Jack Horizontal Shielded w. EMI Panel Finger 8P8C Tab Up"
+		(property "Footprint" "Library:WR-MJ Modular Jack Horizontal Shielded w. EMI Panel Finger 8P8C Tab Up"
 			(at 0 0 90)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "0c0a120b-4f5a-46f2-af8a-4c3c4cff3edc")
+			(uuid "7445bc6e-3d0b-4160-9040-b37ce607cfb7")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -765,7 +765,7 @@
 			(at 0 0 90)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "61f69c23-8cf4-4666-99e3-f2821c9a3613")
+			(uuid "c3a725d3-3940-4729-87b7-2a80a9aed394")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -777,7 +777,7 @@
 			(at 0 0 90)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "8f8c513e-d4d3-40e5-b1bd-b5d878424f85")
+			(uuid "37892806-fe34-4cca-82b6-4ce1b66e3a97")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -797,7 +797,7 @@
 				(type solid)
 			)
 			(layer "F.SilkS")
-			(uuid "d50e919e-e392-4d50-838e-d7b9f1596917")
+			(uuid "14fe31d7-2b70-463e-8ac7-f1c316a31972")
 		)
 		(fp_line
 			(start -8.35 -7.975)
@@ -807,7 +807,7 @@
 				(type solid)
 			)
 			(layer "F.SilkS")
-			(uuid "79e54200-0d6e-493c-ab1c-cbaa808aed41")
+			(uuid "424bfdf4-8c53-48a4-96eb-9bc53ef47450")
 		)
 		(fp_line
 			(start -8.35 -7.975)
@@ -817,7 +817,7 @@
 				(type solid)
 			)
 			(layer "F.SilkS")
-			(uuid "ebd0c049-f9b8-4c80-9737-f09f3dc43fc0")
+			(uuid "3e273d58-f58e-4b92-bb67-980e217b86c4")
 		)
 		(fp_line
 			(start -8.35 0.485)
@@ -827,7 +827,7 @@
 				(type solid)
 			)
 			(layer "F.SilkS")
-			(uuid "07af9985-5d00-4d3f-a349-e49cafd0e5ba")
+			(uuid "73d188df-8d36-49ba-abdb-f22ceea67f70")
 		)
 		(fp_line
 			(start 8.35 7.975)
@@ -837,7 +837,7 @@
 				(type solid)
 			)
 			(layer "F.SilkS")
-			(uuid "ccc96d2b-2761-424a-957f-6ed4318c05d2")
+			(uuid "561902ea-6e11-4e5d-9566-58942dc93150")
 		)
 		(fp_line
 			(start -8.35 7.975)
@@ -847,7 +847,7 @@
 				(type solid)
 			)
 			(layer "F.SilkS")
-			(uuid "14612642-5718-4888-8020-596b8e438f7f")
+			(uuid "473504ac-d93f-4480-a7ac-ec9c770a8da8")
 		)
 		(fp_circle
 			(center 4.6 0.485)
@@ -858,7 +858,7 @@
 			)
 			(fill none)
 			(layer "F.SilkS")
-			(uuid "413ff1e1-3f27-435e-b13c-d59293814c34")
+			(uuid "c2437972-ce77-4abb-9871-19528c5ef18a")
 		)
 		(fp_poly
 			(pts
@@ -870,7 +870,7 @@
 			)
 			(fill solid)
 			(layer "F.CrtYd")
-			(uuid "3fba3b24-a0f2-45e7-bbd6-508138caa74b")
+			(uuid "b3e35803-aff4-454c-83f8-957e29df6ecc")
 		)
 		(fp_line
 			(start 8.25 -7.875)
@@ -880,7 +880,7 @@
 				(type solid)
 			)
 			(layer "F.Fab")
-			(uuid "5d504c78-ed9a-4821-bdde-df41902885bb")
+			(uuid "ac4a613f-9fe9-429d-8aad-4af0ec240056")
 		)
 		(fp_line
 			(start -8.25 -7.875)
@@ -890,7 +890,7 @@
 				(type solid)
 			)
 			(layer "F.Fab")
-			(uuid "7c5f305d-c7e3-44a3-bcaf-0208fae53e00")
+			(uuid "eaf29165-6dbf-43c9-a624-81591b3ead8c")
 		)
 		(fp_line
 			(start 8.25 7.875)
@@ -900,7 +900,7 @@
 				(type solid)
 			)
 			(layer "F.Fab")
-			(uuid "1e6b81f4-bd97-4d07-89b9-d419c10e7bb0")
+			(uuid "fe331a52-fb52-465b-a354-81f0d515f372")
 		)
 		(fp_line
 			(start -8.25 7.875)
@@ -910,21 +910,21 @@
 				(type solid)
 			)
 			(layer "F.Fab")
-			(uuid "a4279565-72e3-4865-9551-0517ee130d0c")
+			(uuid "e60de287-5025-4637-8ce4-c97062cad28f")
 		)
 		(pad "" np_thru_hole circle
 			(at -6.35 2.415 90)
 			(size 3.25 3.25)
 			(drill 3.25)
 			(layers "*.Cu" "*.Mask")
-			(uuid "ffc90666-41ff-43e8-a20b-ae64466c18fa")
+			(uuid "0107c117-7433-4ff1-9ba9-e00e1f17ab41")
 		)
 		(pad "" np_thru_hole circle
 			(at 6.35 2.415 90)
 			(size 3.25 3.25)
 			(drill 3.25)
 			(layers "*.Cu" "*.Mask")
-			(uuid "a268f8b8-5963-4976-9748-01806d93ef94")
+			(uuid "79fd474c-f68b-4ecf-a471-043079b8dff6")
 		)
 		(pad "1" thru_hole circle
 			(at 3.57 -0.125 90)
@@ -936,7 +936,7 @@
 			(pintype "passive")
 			(solder_mask_margin 0.1016)
 			(thermal_bridge_angle 0)
-			(uuid "ca57eaa8-3e13-46cb-91c5-17b62b310168")
+			(uuid "891228d1-94ca-46d3-aa00-0db86cc30424")
 		)
 		(pad "2" thru_hole circle
 			(at 2.55 -1.905 90)
@@ -948,7 +948,7 @@
 			(pintype "passive")
 			(solder_mask_margin 0.1016)
 			(thermal_bridge_angle 0)
-			(uuid "709eb155-5a47-4b9e-9bd3-836302923be3")
+			(uuid "5d5cf489-a703-44cc-9b94-bd604003be8b")
 		)
 		(pad "3" thru_hole circle
 			(at 1.53 -0.125 90)
@@ -960,7 +960,7 @@
 			(pintype "passive")
 			(solder_mask_margin 0.1016)
 			(thermal_bridge_angle 0)
-			(uuid "04a594fe-282f-4418-853f-ca1215038943")
+			(uuid "5ee91942-05c1-4bd2-a0d1-5718951513ea")
 		)
 		(pad "4" thru_hole circle
 			(at 0.51 -1.905 90)
@@ -972,7 +972,7 @@
 			(pintype "passive")
 			(solder_mask_margin 0.1016)
 			(thermal_bridge_angle 0)
-			(uuid "605c8f1e-5989-4719-b1d4-201417cc9fee")
+			(uuid "3d8c65e3-0a2f-4852-902b-e4df6a708607")
 		)
 		(pad "5" thru_hole circle
 			(at -0.51 -0.125 90)
@@ -984,7 +984,7 @@
 			(pintype "passive")
 			(solder_mask_margin 0.1016)
 			(thermal_bridge_angle 0)
-			(uuid "88f62363-b8db-4085-a201-d9890bfee25a")
+			(uuid "f071325c-dd11-43b2-8dff-2e98efc55578")
 		)
 		(pad "6" thru_hole circle
 			(at -1.53 -1.905 90)
@@ -996,7 +996,7 @@
 			(pintype "passive")
 			(solder_mask_margin 0.1016)
 			(thermal_bridge_angle 0)
-			(uuid "824931c9-16c2-4538-b44f-7de7b7ead2a2")
+			(uuid "98dd02ee-f7ca-4d76-aeed-60375d42f8a6")
 		)
 		(pad "7" thru_hole circle
 			(at -2.55 -0.125 90)
@@ -1008,7 +1008,7 @@
 			(pintype "passive")
 			(solder_mask_margin 0.1016)
 			(thermal_bridge_angle 0)
-			(uuid "462b360d-d331-4032-bb0b-5356770a26ac")
+			(uuid "40678fd3-3a63-4d28-bdcf-dd2028938249")
 		)
 		(pad "8" thru_hole circle
 			(at -3.57 -1.905 90)
@@ -1020,7 +1020,7 @@
 			(pintype "passive")
 			(solder_mask_margin 0.1016)
 			(thermal_bridge_angle 0)
-			(uuid "fcac3707-7172-478b-949e-4868561216c7")
+			(uuid "2be0f977-d7be-4196-b4a9-c028bb067731")
 		)
 		(pad "S1" thru_hole circle
 			(at -8.125 -1.015 90)
@@ -1031,7 +1031,7 @@
 			(net 6 "GND")
 			(solder_mask_margin 0.1016)
 			(thermal_bridge_angle 0)
-			(uuid "93f64ec0-d028-449c-8c75-91b25b15e50c")
+			(uuid "bb0d5b7b-6f79-4efa-8f36-7d7db59cf733")
 		)
 		(pad "S2" thru_hole circle
 			(at 8.125 -1.015 90)
@@ -1042,7 +1042,7 @@
 			(net 6 "GND")
 			(solder_mask_margin 0.1016)
 			(thermal_bridge_angle 0)
-			(uuid "ab95a98c-ba2f-4f82-87e4-8fc0cab56e09")
+			(uuid "5b0f88ce-00d8-4ea5-9ec8-55025302d348")
 		)
 	)
 	(gr_arc
