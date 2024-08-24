@@ -1751,7 +1751,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Sensor:WR-MJ Modular Jack Horizontal Shielded w. EMI Panel Finger 8P8C Tab Up"
 			(at 142.24 56.515 90)
 			(effects
 				(font
@@ -1962,7 +1962,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "R"
+		(property "Value" "220"
 			(at 105.41 93.9799 0)
 			(effects
 				(font
@@ -1971,7 +1971,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_THT:R_Axial_DIN0204_L3.6mm_D1.6mm_P7.62mm_Horizontal"
 			(at 104.648 92.71 90)
 			(effects
 				(font
@@ -2369,7 +2369,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "LED"
+		(property "Value" "green"
 			(at 106.68 87.9474 90)
 			(effects
 				(font
@@ -2378,7 +2378,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "LED_THT:LED_D5.0mm"
 			(at 102.87 85.09 0)
 			(effects
 				(font
@@ -2860,7 +2860,7 @@
 				)
 			)
 		)
-		(property "Value" "R"
+		(property "Value" "10k"
 			(at 78.74 85.09 90)
 			(effects
 				(font
@@ -2868,7 +2868,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_THT:R_Axial_DIN0204_L3.6mm_D1.6mm_P7.62mm_Horizontal"
 			(at 78.74 88.9 0)
 			(effects
 				(font
@@ -2938,7 +2938,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Sensor:WR-MJ Modular Jack Horizontal Shielded w. EMI Panel Finger 8P8C Tab Up"
 			(at 142.24 83.185 90)
 			(effects
 				(font
