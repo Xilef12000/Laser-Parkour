@@ -4,6 +4,12 @@
 	(generator_version "8.0")
 	(uuid "799e09d1-2985-4565-afc4-1243d8c883bb")
 	(paper "A4")
+	(title_block
+		(title "Laser-Parkour Sensor")
+		(date "2024-08-18")
+		(rev "01")
+		(company "Manuel König HHN HTWG x42.space")
+	)
 	(lib_symbols
 		(symbol "Connector:RJ45"
 			(pin_names
