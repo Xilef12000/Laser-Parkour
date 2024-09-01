@@ -11,7 +11,7 @@
 		(company "Manuel König HHN HTWG x42.space")
 	)
 	(lib_symbols
-		(symbol "Connector:RJ45"
+		(symbol "Connector:RJ45_Shielded"
 			(pin_names
 				(offset 1.016)
 			)
@@ -27,7 +27,7 @@
 					(justify right)
 				)
 			)
-			(property "Value" "RJ45"
+			(property "Value" "RJ45_Shielded"
 				(at 2.54 13.97 0)
 				(effects
 					(font
@@ -54,7 +54,7 @@
 					(hide yes)
 				)
 			)
-			(property "Description" "RJ connector, 8P8C (8 positions 8 connected)"
+			(property "Description" "RJ connector, 8P8C (8 positions 8 connected), Shielded"
 				(at 0 0 0)
 				(effects
 					(font
@@ -63,7 +63,7 @@
 					(hide yes)
 				)
 			)
-			(property "ki_keywords" "8P8C RJ socket connector"
+			(property "ki_keywords" "8P8C RJ jack socket connector"
 				(at 0 0 0)
 				(effects
 					(font
@@ -81,7 +81,7 @@
 					(hide yes)
 				)
 			)
-			(symbol "RJ45_0_1"
+			(symbol "RJ45_Shielded_0_1"
 				(polyline
 					(pts
 						(xy -5.08 4.445) (xy -6.35 4.445)
@@ -204,7 +204,7 @@
 					)
 				)
 			)
-			(symbol "RJ45_1_1"
+			(symbol "RJ45_Shielded_1_1"
 				(pin passive line
 					(at 10.16 -7.62 180)
 					(length 2.54)
@@ -342,6 +342,24 @@
 						)
 					)
 					(number "8"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 -12.7 90)
+					(length 2.54)
+					(name "~"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "SH"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -1279,6 +1297,102 @@
 				)
 			)
 		)
+		(symbol "power:PWR_FLAG"
+			(power)
+			(pin_numbers hide)
+			(pin_names
+				(offset 0) hide)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "#FLG"
+				(at 0 1.905 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Value" "PWR_FLAG"
+				(at 0 3.81 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" "~"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Special symbol for telling ERC where power comes from"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "flag power"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "PWR_FLAG_0_0"
+				(pin power_out line
+					(at 0 0 90)
+					(length 0)
+					(name "~"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(symbol "PWR_FLAG_0_1"
+				(polyline
+					(pts
+						(xy 0 0) (xy 0 1.27) (xy -1.016 1.905) (xy 0 2.54) (xy 1.016 1.905) (xy 0 1.27)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+		)
 	)
 	(junction
 		(at 118.11 63.5)
@@ -1299,12 +1413,6 @@
 		(uuid "89fe602d-ff03-40b2-9524-0f3da401b943")
 	)
 	(junction
-		(at 123.19 83.82)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "c1d67f91-29fe-48e6-abe0-71bc8fe412e3")
-	)
-	(junction
 		(at 85.09 88.9)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -1313,10 +1421,6 @@
 	(no_connect
 		(at 69.85 68.58)
 		(uuid "09264079-623f-4b4f-b7af-837ccee554d9")
-	)
-	(no_connect
-		(at 120.65 83.82)
-		(uuid "df9e8d92-7d18-4d3c-b9ed-38150f4c211a")
 	)
 	(wire
 		(pts
@@ -1370,16 +1474,6 @@
 	)
 	(wire
 		(pts
-			(xy 120.65 83.82) (xy 123.19 83.82)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "36ecc8ab-ab85-45dc-bd8c-1c0aae0f87e3")
-	)
-	(wire
-		(pts
 			(xy 115.57 50.8) (xy 115.57 58.42)
 		)
 		(stroke
@@ -1397,16 +1491,6 @@
 			(type default)
 		)
 		(uuid "43bfe950-9ce3-4710-8cf0-7d25458ef353")
-	)
-	(wire
-		(pts
-			(xy 123.19 60.96) (xy 123.19 83.82)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "460d189b-f81f-4e8c-9b96-558bb1b98bb4")
 	)
 	(wire
 		(pts
@@ -1440,7 +1524,7 @@
 	)
 	(wire
 		(pts
-			(xy 123.19 83.82) (xy 123.19 87.63)
+			(xy 123.19 60.96) (xy 123.19 87.63)
 		)
 		(stroke
 			(width 0)
@@ -1649,7 +1733,7 @@
 		)
 	)
 	(symbol
-		(lib_id "Connector:RJ45")
+		(lib_id "Connector:RJ45_Shielded")
 		(at 142.24 55.88 180)
 		(unit 1)
 		(exclude_from_sim no)
@@ -1693,7 +1777,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "RJ connector, 8P8C (8 positions 8 connected)"
+		(property "Description" "RJ connector, 8P8C (8 positions 8 connected), Shielded"
 			(at 142.24 55.88 0)
 			(effects
 				(font
@@ -1725,6 +1809,9 @@
 		)
 		(pin "2"
 			(uuid "107d2e83-af31-4a6b-a84b-4301ec51be0d")
+		)
+		(pin "SH"
+			(uuid "3fad902b-f5df-46e1-9d04-987c9e5ca65a")
 		)
 		(instances
 			(project ""
@@ -1868,6 +1955,73 @@
 		)
 	)
 	(symbol
+		(lib_id "power:GND")
+		(at 142.24 43.18 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "19b22559-ca8b-472c-aa85-3652380cf9ac")
+		(property "Reference" "#PWR014"
+			(at 148.59 43.18 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 146.05 43.1799 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Footprint" ""
+			(at 142.24 43.18 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 142.24 43.18 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 142.24 43.18 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "4c32bae4-db0e-4e97-9e2b-af8ae0458c68")
+		)
+		(instances
+			(project ""
+				(path "/799e09d1-2985-4565-afc4-1243d8c883bb"
+					(reference "#PWR014")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Device:R")
 		(at 102.87 92.71 180)
 		(unit 1)
@@ -1932,6 +2086,139 @@
 			(project ""
 				(path "/799e09d1-2985-4565-afc4-1243d8c883bb"
 					(reference "R2")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 142.24 69.85 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "27f8427b-7e69-4fb5-adee-fca2aa5e877d")
+		(property "Reference" "#PWR015"
+			(at 148.59 69.85 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 146.05 69.8499 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Footprint" ""
+			(at 142.24 69.85 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 142.24 69.85 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 142.24 69.85 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "ba6d8057-16b2-47fc-b991-dc3323bbc12f")
+		)
+		(instances
+			(project ""
+				(path "/799e09d1-2985-4565-afc4-1243d8c883bb"
+					(reference "#PWR015")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:PWR_FLAG")
+		(at 63.5 114.3 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "2c794f86-60eb-4a79-af64-2a52c7dc913f")
+		(property "Reference" "#FLG01"
+			(at 63.5 112.395 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "PWR_FLAG"
+			(at 63.5 109.22 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 63.5 114.3 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 63.5 114.3 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Special symbol for telling ERC where power comes from"
+			(at 63.5 114.3 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "6593b891-ac37-4756-8b63-0167550db307")
+		)
+		(instances
+			(project ""
+				(path "/799e09d1-2985-4565-afc4-1243d8c883bb"
+					(reference "#FLG01")
 					(unit 1)
 				)
 			)
@@ -2065,6 +2352,72 @@
 			(project ""
 				(path "/799e09d1-2985-4565-afc4-1243d8c883bb"
 					(reference "#PWR07")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:+5V")
+		(at 63.5 114.3 180)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "35fe7f4a-bb75-4e8d-b1c2-abca01f99bcd")
+		(property "Reference" "#PWR017"
+			(at 63.5 110.49 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "+5V"
+			(at 63.5 119.38 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 63.5 114.3 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 63.5 114.3 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"+5V\""
+			(at 63.5 114.3 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "9c2538a7-afc4-442a-88cc-4d984b4829a0")
+		)
+		(instances
+			(project ""
+				(path "/799e09d1-2985-4565-afc4-1243d8c883bb"
+					(reference "#PWR017")
 					(unit 1)
 				)
 			)
@@ -2767,6 +3120,138 @@
 		)
 	)
 	(symbol
+		(lib_id "power:GND")
+		(at 50.8 114.3 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "c9318f35-4937-43ac-8dac-8bcc537db922")
+		(property "Reference" "#PWR016"
+			(at 50.8 120.65 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 50.8 119.38 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 50.8 114.3 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 50.8 114.3 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 50.8 114.3 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "0b77b0be-a824-434c-86d6-2b425ca6b825")
+		)
+		(instances
+			(project ""
+				(path "/799e09d1-2985-4565-afc4-1243d8c883bb"
+					(reference "#PWR016")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:PWR_FLAG")
+		(at 50.8 114.3 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "cdadb4b8-1d02-41e7-a381-3a14049a41a6")
+		(property "Reference" "#FLG02"
+			(at 50.8 112.395 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "PWR_FLAG"
+			(at 50.8 109.22 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 50.8 114.3 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 50.8 114.3 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Special symbol for telling ERC where power comes from"
+			(at 50.8 114.3 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "cb432f54-cc79-4c29-aa3b-001e42ae9edf")
+		)
+		(instances
+			(project ""
+				(path "/799e09d1-2985-4565-afc4-1243d8c883bb"
+					(reference "#FLG02")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Device:R")
 		(at 81.28 88.9 90)
 		(unit 1)
@@ -2835,7 +3320,7 @@
 		)
 	)
 	(symbol
-		(lib_id "Connector:RJ45")
+		(lib_id "Connector:RJ45_Shielded")
 		(at 142.24 82.55 180)
 		(unit 1)
 		(exclude_from_sim no)
@@ -2880,7 +3365,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "RJ connector, 8P8C (8 positions 8 connected)"
+		(property "Description" "RJ connector, 8P8C (8 positions 8 connected), Shielded"
 			(at 142.24 82.55 0)
 			(effects
 				(font
@@ -2912,6 +3397,9 @@
 		)
 		(pin "2"
 			(uuid "3f5b7ba0-6ec1-4090-be7d-518263b0ed9f")
+		)
+		(pin "SH"
+			(uuid "061e88c1-1aba-49e4-af1f-e5dbef47405b")
 		)
 		(instances
 			(project ""

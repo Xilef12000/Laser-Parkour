@@ -1,4 +1,4 @@
-(footprint "615008140621"
+(footprint "WR-MJ Modular Jack Horizontal Shielded w. EMI Panel Finger 8P8C Tab Up"
 	(version 20240108)
 	(generator "pcbnew")
 	(generator_version "8.0")
@@ -283,7 +283,7 @@
 		(thermal_bridge_angle 0)
 		(uuid "5dc04071-cb50-442c-b48b-a906afd1b785")
 	)
-	(pad "S1" thru_hole circle
+	(pad "SH" thru_hole circle
 		(at -8.125 -1.015)
 		(size 2.4 2.4)
 		(drill 1.6)
@@ -293,7 +293,7 @@
 		(thermal_bridge_angle 0)
 		(uuid "a9e81fe4-2ea4-442f-a28e-7e005608d095")
 	)
-	(pad "S2" thru_hole circle
+	(pad "SH" thru_hole circle
 		(at 8.125 -1.015)
 		(size 2.4 2.4)
 		(drill 1.6)
