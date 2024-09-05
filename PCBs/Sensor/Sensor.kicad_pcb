@@ -2352,7 +2352,7 @@
 				)
 			)
 		)
-		(property "Value" "green"
+		(property "Value" "LED"
 			(at 1.275 -3.5 0)
 			(layer "F.Fab")
 			(uuid "d3132cc5-9d00-4c1b-b54e-afd8b8e4ebc7")

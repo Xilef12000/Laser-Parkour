@@ -3095,7 +3095,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "green"
+		(property "Value" "LED"
 			(at 106.68 87.9474 90)
 			(effects
 				(font
