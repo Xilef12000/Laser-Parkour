@@ -107,26 +107,6 @@
 		(uuid "5d11bc7a-7c40-44d9-9a82-2e0e914ab7de")
 	)
 	(fp_line
-		(start -5.2 -6.6)
-		(end -5 -6.8)
-		(stroke
-			(width 0.127)
-			(type solid)
-		)
-		(layer "F.SilkS")
-		(uuid "d16dce61-7e36-49ac-8b1c-229d547d46b9")
-	)
-	(fp_line
-		(start -5.2 -6.6)
-		(end -5 -6.4)
-		(stroke
-			(width 0.127)
-			(type solid)
-		)
-		(layer "F.SilkS")
-		(uuid "19aeea87-b230-47be-a815-c29cda2362d7")
-	)
-	(fp_line
 		(start -2.2 -5.95)
 		(end -7.35 -5.95)
 		(stroke
@@ -137,46 +117,6 @@
 		(uuid "3adfdaf0-37ed-4fbe-83e9-9600ba8cbc57")
 	)
 	(fp_line
-		(start -1.7 -6.6)
-		(end -5.2 -6.6)
-		(stroke
-			(width 0.127)
-			(type solid)
-		)
-		(layer "F.SilkS")
-		(uuid "2ab22bce-965c-48b3-b3bf-2011d9b1f03f")
-	)
-	(fp_line
-		(start -0.8 -5.7)
-		(end -1.7 -6.6)
-		(stroke
-			(width 0.127)
-			(type solid)
-		)
-		(layer "F.SilkS")
-		(uuid "4c5a4657-140b-4b2c-a07d-754bab5f6aac")
-	)
-	(fp_line
-		(start 0.8 5.7)
-		(end 1.7 6.6)
-		(stroke
-			(width 0.127)
-			(type solid)
-		)
-		(layer "F.SilkS")
-		(uuid "77d30324-7090-4ea5-beac-d40befb617de")
-	)
-	(fp_line
-		(start 1.7 6.6)
-		(end 5.2 6.6)
-		(stroke
-			(width 0.127)
-			(type solid)
-		)
-		(layer "F.SilkS")
-		(uuid "17f0bc7d-e04e-4970-af96-aee7440ff811")
-	)
-	(fp_line
 		(start 2.2 -5.95)
 		(end 6.6 -5.95)
 		(stroke
@@ -185,26 +125,6 @@
 		)
 		(layer "F.SilkS")
 		(uuid "426c35c2-c02b-4a77-9867-c5e750baeebe")
-	)
-	(fp_line
-		(start 5.2 6.6)
-		(end 5 6.4)
-		(stroke
-			(width 0.127)
-			(type solid)
-		)
-		(layer "F.SilkS")
-		(uuid "84378d08-cd2b-4623-bff1-c48c62935532")
-	)
-	(fp_line
-		(start 5.2 6.6)
-		(end 5 6.8)
-		(stroke
-			(width 0.127)
-			(type solid)
-		)
-		(layer "F.SilkS")
-		(uuid "6bfec6c9-ed01-4f24-9c50-11b6bdf4e9c3")
 	)
 	(fp_line
 		(start 6.6 -5.95)
@@ -276,31 +196,7 @@
 			(type default)
 		)
 		(fill solid)
-		(layer "B.Mask")
-		(uuid "0b429db3-6fcf-4f77-9cdb-3b3350f38548")
-	)
-	(fp_poly
-		(pts
-			(xy 1.85 6.1) (xy -1.85 6.1) (xy -1.85 3.2) (xy 1.85 3.2)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(fill solid)
-		(layer "B.Mask")
-		(uuid "90dff298-b2cb-47bc-8c59-631e55b41043")
-	)
-	(fp_poly
-		(pts
-			(xy 1.85 -3.2) (xy -1.85 -3.2) (xy -1.85 -6.1) (xy 1.85 -6.1)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(fill solid)
-		(layer "F.Mask")
+		(layer "Edge.Cuts")
 		(uuid "c25d7688-0ca0-4094-95ea-fbbf7090fdc7")
 	)
 	(fp_poly
@@ -312,7 +208,7 @@
 			(type default)
 		)
 		(fill solid)
-		(layer "F.Mask")
+		(layer "Edge.Cuts")
 		(uuid "ff0ca9b9-a4e2-4856-9837-481b033ea665")
 	)
 	(fp_poly
@@ -528,7 +424,7 @@
 		(layer "F.Fab")
 		(uuid "52ccc36d-6f09-4118-959e-0ed26bb69d8f")
 	)
-	(fp_text user "1"
+	(fp_text user "S1"
 		(at -5.1 3.4 0)
 		(unlocked yes)
 		(layer "F.SilkS")
@@ -580,7 +476,7 @@
 			(justify left bottom)
 		)
 	)
-	(fp_text user "2"
+	(fp_text user "S2"
 		(at -5.2 -2 0)
 		(unlocked yes)
 		(layer "F.SilkS")
@@ -592,90 +488,6 @@
 			)
 			(justify left bottom)
 		)
-	)
-	(fp_text user "For Bracket Terminal (Square Cut-out), please open layer 17 & 46\nFor Gerber file, it is necessary to transfer in additional on layer 17& 46 to get square Cut-out "
-		(at 0 10 0)
-		(unlocked yes)
-		(layer "Cmts.User")
-		(uuid "45ba0e2b-5acc-4770-8de7-be0f4d6a2a25")
-		(effects
-			(font
-				(size 0.560832 0.560832)
-				(thickness 0.048768)
-			)
-		)
-	)
-	(fp_text user "cutout area"
-		(at -1.1 4.9 0)
-		(unlocked yes)
-		(layer "Cmts.User")
-		(uuid "8bdef0ea-1196-4ba4-8602-d761e45250b9")
-		(effects
-			(font
-				(size 0.280416 0.280416)
-				(thickness 0.024384)
-			)
-			(justify left bottom)
-		)
-	)
-	(fp_text user "Milling Layer\nthe hole size should \nfollow the Milling Layer"
-		(at 5.5 8 0)
-		(unlocked yes)
-		(layer "Cmts.User")
-		(uuid "d4122b24-fe92-485b-973b-cd704079884a")
-		(effects
-			(font
-				(size 0.373888 0.373888)
-				(thickness 0.032512)
-			)
-			(justify left bottom)
-		)
-	)
-	(fp_text user "cutout area"
-		(at -1.1 -4.4 0)
-		(unlocked yes)
-		(layer "Cmts.User")
-		(uuid "e812bbd3-7ea8-4a82-a512-c91c98477360")
-		(effects
-			(font
-				(size 0.280416 0.280416)
-				(thickness 0.024384)
-			)
-			(justify left bottom)
-		)
-	)
-	(fp_text user "Milling Layer\nthe hole size should \nfollow the Milling Layer"
-		(at -10.8 -6.3 0)
-		(unlocked yes)
-		(layer "Cmts.User")
-		(uuid "fae1eff9-7038-4206-b6a4-0cc680e87ce5")
-		(effects
-			(font
-				(size 0.373888 0.373888)
-				(thickness 0.032512)
-			)
-			(justify left bottom)
-		)
-	)
-	(pad "1" thru_hole circle
-		(at -7 2.5)
-		(size 1.508 1.508)
-		(drill 1)
-		(layers "*.Cu" "*.Mask")
-		(remove_unused_layers no)
-		(solder_mask_margin 0.1016)
-		(thermal_bridge_angle 0)
-		(uuid "c974adbc-85dc-4345-8504-d875fc004570")
-	)
-	(pad "2" thru_hole circle
-		(at -7 -2.5)
-		(size 1.508 1.508)
-		(drill 1)
-		(layers "*.Cu" "*.Mask")
-		(remove_unused_layers no)
-		(solder_mask_margin 0.1016)
-		(thermal_bridge_angle 0)
-		(uuid "9e2640c3-a471-457f-bfb2-009a16a34442")
 	)
 	(pad "A" thru_hole circle
 		(at 7.5 2.5)
@@ -706,5 +518,25 @@
 		(solder_mask_margin 0.1016)
 		(thermal_bridge_angle 0)
 		(uuid "8e6c0eb2-e54a-40e2-87c1-7747a76a2819")
+	)
+	(pad "S1" thru_hole circle
+		(at -7 2.5)
+		(size 1.508 1.508)
+		(drill 1)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(solder_mask_margin 0.1016)
+		(thermal_bridge_angle 0)
+		(uuid "c974adbc-85dc-4345-8504-d875fc004570")
+	)
+	(pad "S2" thru_hole circle
+		(at -7 -2.5)
+		(size 1.508 1.508)
+		(drill 1)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(solder_mask_margin 0.1016)
+		(thermal_bridge_angle 0)
+		(uuid "9e2640c3-a471-457f-bfb2-009a16a34442")
 	)
 )

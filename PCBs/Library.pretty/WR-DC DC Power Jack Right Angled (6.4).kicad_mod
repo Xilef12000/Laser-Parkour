@@ -1,4 +1,4 @@
-(footprint "694108301002"
+(footprint "WR-DC DC Power Jack Right Angled (6.4)"
 	(version 20240108)
 	(generator "pcbnew")
 	(generator_version "8.0")
@@ -208,16 +208,6 @@
 		(layer "F.Fab")
 		(uuid "132ad9bb-050f-4b16-b416-f39269c7f53c")
 	)
-	(fp_line
-		(start 8 0.5)
-		(end 7 0.5)
-		(stroke
-			(width 0.1)
-			(type solid)
-		)
-		(layer "F.Fab")
-		(uuid "90feede3-9be5-43b0-a125-362cd7d7e5e0")
-	)
 	(fp_text user "3"
 		(at 2.3 3.5 0)
 		(unlocked yes)
@@ -232,7 +222,7 @@
 		)
 	)
 	(fp_text user "2"
-		(at -2.1 0.6 0)
+		(at -2.2 0.6 0)
 		(unlocked yes)
 		(layer "F.SilkS")
 		(uuid "a1116e6e-7b31-42ae-bd02-3f0a73c52921")
@@ -257,62 +247,10 @@
 			(justify left bottom)
 		)
 	)
-	(fp_text user "PCB Cutout Area"
-		(at 5.9 0 90)
-		(unlocked yes)
-		(layer "Cmts.User")
-		(uuid "043122b0-ce8f-4b0d-9edd-2b40743eec4f")
-		(effects
-			(font
-				(size 0.23368 0.23368)
-				(thickness 0.02032)
-			)
-			(justify bottom)
-		)
-	)
-	(fp_text user "PCB Cutout Area"
-		(at 2.9 5 0)
-		(unlocked yes)
-		(layer "Cmts.User")
-		(uuid "43a8710f-bea4-4094-8229-391e1ca32da6")
-		(effects
-			(font
-				(size 0.23368 0.23368)
-				(thickness 0.02032)
-			)
-			(justify bottom)
-		)
-	)
-	(fp_text user "Milling Layer\nthe hole size should \nfollow the Milling Layer"
-		(at 8.1 0.9 0)
-		(unlocked yes)
-		(layer "Cmts.User")
-		(uuid "4872102d-8ba2-4cf1-826b-93d4ae6119df")
-		(effects
-			(font
-				(size 0.280416 0.280416)
-				(thickness 0.024384)
-			)
-			(justify left bottom)
-		)
-	)
-	(fp_text user "PCB Cutout Area"
-		(at 0.1 0 90)
-		(unlocked yes)
-		(layer "Cmts.User")
-		(uuid "fec43f0a-7114-466a-94be-f52654ec54d9")
-		(effects
-			(font
-				(size 0.23368 0.23368)
-				(thickness 0.02032)
-			)
-			(justify bottom)
-		)
-	)
 	(pad "1" thru_hole oval
 		(at 5.8 0 90)
 		(size 4 2)
-		(drill 0.8)
+		(drill oval 3 1)
 		(layers "*.Cu" "*.Mask")
 		(remove_unused_layers no)
 		(solder_mask_margin 0.1016)
@@ -322,7 +260,7 @@
 	(pad "2" thru_hole oval
 		(at 0 0 270)
 		(size 4 2)
-		(drill 0.8)
+		(drill oval 3 1)
 		(layers "*.Cu" "*.Mask")
 		(remove_unused_layers no)
 		(solder_mask_margin 0.1016)
@@ -332,7 +270,7 @@
 	(pad "3" thru_hole oval
 		(at 2.8 4.8 180)
 		(size 4 2)
-		(drill 0.8)
+		(drill oval 3 1)
 		(layers "*.Cu" "*.Mask")
 		(remove_unused_layers no)
 		(solder_mask_margin 0.1016)
