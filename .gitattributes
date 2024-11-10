@@ -1,2 +1,2 @@
 PCBs/Library.pretty/* linguist-vendored
-Sketches/Controller/lib/* linguist-vendored
+Sketches/Controller/lib/** linguist-vendored
