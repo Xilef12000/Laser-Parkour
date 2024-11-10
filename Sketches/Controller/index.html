@@ -6,6 +6,10 @@
 	<title>Laser-Parkour</title>
 </head>
 <body>
+	<iframe hidden name="getframe" id="getframe"></iframe>
+	<form target="getframe" action="/action/rescan"  method="get">
+		<input type="submit" value="Rescan for Sensors" />
+	</form>
 	<div id="sensors"></div>
 </body>
 <script type="text/javascript">
@@ -13,26 +17,32 @@
 
 	const socket = new WebSocket('ws://' + location.host + '/API');
 	socket.addEventListener('message', ev => {
-		data = JSON.parse(ev.data)
-		console.log(data)
 		table = '<table>'
 
-		table += '<tr>'
-		table += '<th>Addr</th>'
-		table += '<th>Type</th>'
-		table += '<th>Mode</th>'
-		table += '<th>Value</th>'
-		table += '<th>conStatus</th>'
-		table += '</tr>'
-
-		for (var i in data) {
 			table += '<tr>'
-			table += '<td>' + data[i].address + '</td>'
-			table += '<td>' + data[i].deviceType + '</td>'
-			table += '<td>' + data[i].deviceMode + '</td>'
-			table += '<td>' + data[i].value + '</td>'
-			table += '<td>' + data[i].conStatus + '</td>'
+			table += '<th>Addr</th>'
+			table += '<th>Type</th>'
+			table += '<th>Mode</th>'
+			table += '<th>Value</th>'
+			table += '<th>conStatus</th>'
 			table += '</tr>'
+		if (ev.data == ']') {
+			console.log("no sensor connected")
+			table += '<tr><td>--</td></tr>'
+		}
+		else {
+			data = JSON.parse(ev.data)
+			console.log(data)
+			
+			for (var i in data) {
+				table += '<tr>'
+				table += '<td>' + data[i].address + '</td>'
+				table += '<td>' + data[i].deviceType + '</td>'
+				table += '<td>' + data[i].deviceMode + '</td>'
+				table += '<td>' + data[i].value + '</td>'
+				table += '<td>' + data[i].conStatus + '</td>'
+				table += '</tr>'
+			}	
 		}
 		table += '</table>'
 		div.innerHTML = table

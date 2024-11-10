@@ -21,6 +21,7 @@ lcd_i2c = 1
 lcd_sda = Pin(14)
 lcd_scl = Pin(15)
 
+sensors = []
 class Sensor:
     address = 0
     deviceType = 0
@@ -60,17 +61,17 @@ def init():
     # init bus
     global i2c
     i2c = I2C(bus_i2c,sda=bus_sda,scl=bus_scl,freq=4800) # set speed form 100000 to xxx
-
-    # bus scan
+    scanBus()
+    
+def scanBus():
+    global sensors
+    sensors = []
     print('Scaning Sensor Bus...')
     foundAdresses = i2c.scan()
     if len(foundAdresses) == 0:
-        print('No Sensor found!\nexiting...')
-        exit(0)
+        print('No Sensor found!')
     else:
-        print(f'{len(foundAdresses)} Sensors found')
-        global sensors
-        sensors = []
+        print(f'{len(foundAdresses)} Sensors found')       
         for address in foundAdresses:
             sensor = Sensor(address)
             print(str(sensor))
@@ -94,6 +95,11 @@ def createWap():
 @app.route('/')
 async def index(request):
     return send_file('index.html')
+
+@app.route('/action/rescan')
+async def index(request):
+    scanBus()
+    return '0'
 
 @app.route('/API')
 @with_websocket
