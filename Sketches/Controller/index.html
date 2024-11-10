@@ -10,48 +10,42 @@
 </body>
 <script type="text/javascript">
 	div = document.getElementById('sensors');
-	var pollRate = 500;
-	const pendingForms = new WeakMap();
-	function getAPI() {
-		const controller = new AbortController();
-		setTimeout(() => controller.abort(), pollRate);
-		fetch('http://192.168.4.1/API', { signal: controller.signal })
-		.then(response => {
-			if (!response.ok) {
-				throw new Error('Network response was not ok');
-			}
-			return response.json();
-		})
-		.then(data => {
-			console.log(data)
-			table = '<table>'
 
+	const socket = new WebSocket('ws://' + location.host + '/API');
+	socket.addEventListener('message', ev => {
+		data = JSON.parse(ev.data)
+		console.log(data)
+		table = '<table>'
+
+		table += '<tr>'
+		table += '<th>Addr</th>'
+		table += '<th>Type</th>'
+		table += '<th>Mode</th>'
+		table += '<th>Value</th>'
+		table += '<th>conStatus</th>'
+		table += '</tr>'
+
+		for (var i in data) {
 			table += '<tr>'
-			table += '<th>Addr</th>'
-			table += '<th>Type</th>'
-			table += '<th>Mode</th>'
-			table += '<th>Value</th>'
-			table += '<th>conStatus</th>'
+			table += '<td>' + data[i].address + '</td>'
+			table += '<td>' + data[i].deviceType + '</td>'
+			table += '<td>' + data[i].deviceMode + '</td>'
+			table += '<td>' + data[i].value + '</td>'
+			table += '<td>' + data[i].conStatus + '</td>'
 			table += '</tr>'
-
-			for (var i in data) {
-				table += '<tr>'
-				table += '<td>' + data[i].address + '</td>'
-				table += '<td>' + data[i].deviceType + '</td>'
-				table += '<td>' + data[i].deviceMode + '</td>'
-				table += '<td>' + data[i].value + '</td>'
-				table += '<td>' + data[i].conStatus + '</td>'
-				table += '</tr>'
-			}
-			table += '</table>'
-			div.innerHTML = table
-
-		})
-		.catch(error => {
-			console.error('Error:', error);
-		});
-		setTimeout(getAPI, pollRate);
-	}
-	getAPI()
+		}
+		table += '</table>'
+		div.innerHTML = table
+	});
+	socket.addEventListener('close', ev => {
+		console.log('<<< closed');
+	});
+	/*document.getElementById('form').onsubmit = ev => {
+		ev.preventDefault();
+		const textField = document.getElementById('text');
+		log('>>> ' + textField.value, 'red');
+		socket.send(textField.value);
+		textField.value = '';
+	};*/
 </script>
 </html>

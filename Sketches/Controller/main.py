@@ -1,12 +1,12 @@
-from time import sleep_ms, ticks_ms
+from time import sleep_ms
 from machine import I2C, Pin
 from machine_i2c_lcd import I2cLcd
 from sys import exit
-import network
-import rp2
-import socket
-import os
-import uasyncio as asyncio 
+from microdot import Microdot, send_file
+from microdot.websocket import with_websocket
+import uasyncio as asyncio
+
+app = Microdot()
 
 # WAP config
 wap_country = 'DE'
@@ -50,7 +50,6 @@ class Sensor:
             self.conStatus -= 1
             #print(f'sensor {self.address} faulty')\
 
-        
 def init():
     # init lcd
     #global lcd
@@ -76,21 +75,9 @@ def init():
             sensor = Sensor(address)
             print(str(sensor))
             sensors.append(sensor)
-        
     for sensor in sensors:
         sensor.setMode(1)
         sensor.setType(1)
-            
-async def main():
-    asyncio.create_task(asyncio.start_server(serveClient, "192.168.4.1", 80))
-    init()
-    time_last = ticks_ms() 
-    while True:
-        if ticks_ms() >= time_last + 200:
-            time_last = ticks_ms() 
-            for sensor in sensors:
-                sensor.readValue()
-        await asyncio.sleep(0.1)   # Sleep for 0.1 seconds 
         
 def createWap():
     rp2.country(wap_country)
@@ -104,43 +91,37 @@ def createWap():
     print('Standard-Gateway:', netConfig[2])
     print('DNS-Server:', netConfig[3])
 
-def serveClient(reader, writer):
-    #print("Client connected")  # Print message when client is connected
-    request_line = await reader.readline()  # Read the HTTP request line
-    #print("Request:", request_line)         # Print the received request
-    # Skip HTTP request headers
-    while await reader.readline() != b"\r\n":
-        pass
+@app.route('/')
+async def index(request):
+    return send_file('index.html')
 
-    request = str(request_line)        # Convert request to string
-    request = request.split()
-    response = ''
-    if request[1] == '/':
-        file = open('index.html', 'r')
-        response = file.read()
-        file.close()
-        writer.write('HTTP/1.0 200 OK\r\nContent-type: text/html\r\n\r\n')
-        writer.write(response)
-    elif request[1] == '/API':
+@app.route('/API')
+@with_websocket
+async def api(request, ws):
+    while True:
         response = '['
         for sensor in sensors:
             response += str(sensor).replace("'", '"') + ','
         response = response[:-1]
         response += ']'
-        writer.write('HTTP/1.0 200 OK\r\nContent-type: text/json\r\nAccess-Control-Allow-Origin: *\r\n\r\n')
-        writer.write(response)
-    else:
-        response = '404'
-        writer.write('HTTP/1.0 200 OK\r\nContent-type: text/html\r\n\r\n')
-        writer.write(response)
-
-    await writer.drain()     # Drain the writer buffer
-    await writer.wait_closed()  # Wait until writer is closed
-    #print("Client disconnected")  # Print message when client is disconnected
-
+        #return response
+        await ws.send(response)
+        await asyncio.sleep(0.5)
+    
+async def startWeb():
+      await app.run(debug=True)
+      
+async def main() :
+    asyncio.create_task(startWeb())
+    while True:
+        for sensor in sensors:
+            sensor.readValue()
+        await asyncio.sleep(0.1)   # Sleep for 0.1 seconds  
+        
 if __name__=="__main__":
-    createWap()
+    #createWap()
+    init()
     try:
-        asyncio.run(main())  # Run the main asynchronous function
+        asyncio.run(main())
     finally:
-        asyncio.new_event_loop() #Create a new event loop
+        asyncio.new_event_loop()
