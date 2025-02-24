@@ -1,2 +1,3 @@
 PCBs/Library.pretty/* linguist-vendored
-Sketches/Controller/lib/** linguist-vendored
+Sketches/Controller/lib-to-freeze/** linguist-vendored
+Sketches/Controller/project/lib/** linguist-vendored
