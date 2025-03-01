@@ -1,9 +1,9 @@
-from time import sleep_ms, time
+from time import sleep_ms, time_ns
 from machine import I2C, Pin
 from machine_i2c_lcd import I2cLcd
 import network
 from sys import exit
-from microdot import Microdot, send_file
+from microdot import Microdot, send_file, abort, redirect
 from microdot.websocket import with_websocket
 import uasyncio as asyncio
 from urllib.parse import urlparse, parse_qs
@@ -18,7 +18,9 @@ app = Microdot()
 # mode and statemachine
 systemMode = 0 # 0:config 1:game -10:config error -1:sensor disconnected
 systemStateMachine = 0 # 0:noGame 1:awaitName 2:awaitStart 3:awaitEnd
-nextName = ""
+
+lastList = []
+topList = []
 
 sensors = []
 class Sensor:
@@ -45,13 +47,14 @@ class Sensor:
             data = i2c.readfrom(self.address, 2, True)
             self.conStatus = 1
             self.value = int.from_bytes(data, 'big')
-            #print(f'{hex(self.address)} : {self.value}')
         except OSError as error:
             self.conStatus -= 1
             if self.conStatus < -5:
                 global systemMode
                 systemMode = -1
-            #print(f'sensor {self.address} faulty')\
+    def getValue(self):
+        self.readValue()
+        return self.value
 
 def init():
     # init LCD
@@ -67,7 +70,33 @@ def init():
     # open_drain
     open_drain = Pin(18, Pin.IN, Pin.PULL_UP)
     def open_drain_handler(pin):
-        print(time())
+        tempTime = time_ns()
+        global systemStateMachine
+        if systemStateMachine == 2:
+            global startSensor
+            if startSensor.getValue() == 0:
+                global startTime
+                startTime = tempTime
+                systemStateMachine = 3
+        elif systemStateMachine == 3:
+            global endSensor
+            if endSensor.getValue() == 0:
+                global endTime
+                endTime = tempTime
+                global startTime
+                totalTime = (endTime - startTime)*1e-9
+                global lastList
+                lastList.append({'name': nextName, 'time': totalTime})
+                if len(lastList) > 3:
+                    lastList.pop(0)
+                global topList
+                topList.append({'name': nextName, 'time': totalTime})
+                def sortkey(e):
+                    return e['time']
+                topList.sort(key=sortkey)
+                if len(topList) > 3:
+                    topList.pop(0)
+                systemStateMachine = 1
     open_drain.irq(trigger=Pin.IRQ_FALLING, handler=open_drain_handler)
     # roraty encoder config
     rotary = Rotary(11, 13, 12)
@@ -85,19 +114,18 @@ def init():
     global i2c
     i2c = I2C(0,sda=Pin(16),scl=Pin(17),freq=4800) # set speed form 100000 to xxx
     scanBus()
-    
+
 def scanBus():
     global systemMode
     systemMode = 0
     global sensors
-    global ldrSensors
     global startSensor
     global endSensor
     sensors = []
-    ldrSensors = []
     startSensor = None
     endSensor = None
     print('Scaning Sensor Bus...')
+    global i2c
     foundAdresses = i2c.scan()
     if len(foundAdresses) == 0:
         print('No Sensor found!')
@@ -107,9 +135,7 @@ def scanBus():
             sensor = Sensor(address)
             print(str(sensor))
             sensors.append(sensor)
-            if sensor.deviceType == 1:
-                ldrSensors.append(sensor)
-            elif sensor.deviceType == 2:
+            if sensor.deviceType == 2:
                 if startSensor != None:
                     print("more then one startSensor found")
                     systemMode = -10
@@ -124,11 +150,9 @@ def scanBus():
         systemMode = -10
     if endSensor == None:
         print("no endSensor found")
-        systemMode = -10
-                
+        systemMode = -10       
     for sensor in sensors:
         sensor.setMode(1)
-        #sensor.setType(1)
         
 def createWap():
     rp2.country('DE')
@@ -152,30 +176,51 @@ async def index(request):
 
 @app.route('/action/rescan')
 async def index(request):
-    scanBus()
-    return '0'
+    if systemMode <= 0:
+        scanBus()
+        return'scanning'
+    else:
+        return abort(428, 'system in wrong mode, unable to scan')
 
 @app.route('/action/name')
 async def index(request):
     global systemStateMachine
     #print(parse_qs(urlparse('?' + request.query_string).query))
     if systemStateMachine == 1:
-        nextName = request.query_string
+        global nextName
+        nextName = parse_qs(urlparse('?' + request.query_string).query)['name'][0]
         systemStateMachine = 2
-    return parse_qs(urlparse('?' + request.query_string).query)['name'][0]
+        return nextName
+    else:
+        return abort(428, 'system not ready')
 
 @app.route('/action/startgame')
 async def index(request):
     global systemMode
+    global systemStateMachine
     if systemMode == 0:
         systemMode = 1
-    return str(systemMode)
+        systemStateMachine = 1
+        return redirect('/?m=game', status_code=303)
+    else:
+        return redirect('/?m=setup', status_code=303)
+
+@app.route('/API/playerlist')
+async def index(request):
+    global lastList
+    global topList
+    data = {"topList": topList, "lastList": lastList}
+    return  json.dumps(data)
 
 @app.route('/API/sensors')
 @with_websocket
 async def api(request, ws):
+    global systemMode
+    global systemStateMachine
+    global sensors
     while True:
-        global sensors
+        systemMode = 0
+        systemStateMachine = 0
         response = '['
         for sensor in sensors:
             response += str(sensor).replace("'", '"') + ','

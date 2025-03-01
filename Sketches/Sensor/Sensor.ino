@@ -52,6 +52,7 @@ void setup() {
       }
       break;
     case 2:
+    case 3:
       while (true) {
         state = (uint16_t)digitalRead(PIN);
         if (state == LOW) {

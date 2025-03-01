@@ -10,31 +10,36 @@
 	<div id="erros">
 		<div id="lostConnection" hidden style="color: red;">Lost connection</div>
 		<div id="lostSensor" hidden style="color: red;">Lost connection to one ore more sensors</div>
+		<div id="startGameFirst" hidden style="color: red;">System not ready, please <a href="/action/startgame">start the game first</a></div>
 		<div id="reconnectedSensor" hidden style="color: green;">Reconnected to all sensors</div>
 	</div>
 	<div hidden id="setup">
 		<form target="getframe" action="/action/rescan"  method="get">
 			<input type="submit" value="Rescan for Sensors" />
-		</form>
+		</form>	
+		<button type="button" onclick="startGame()">start game</button> 
 		<div id="sensors"></div>
 	</div>
 	<div hidden id="game">
-		<div id="current"></div>
-		<div id="top"></div>
-		<div id="last"></div>
+		<div id="topList"></div>
+		<div id="lastList"></div>
 		<div id="next">
-			<form target="getframe" action="/action/name"  method="get">
+			<form id="form" target="getframe" action="/action/name"  method="get">
 				<label for="lname">Next name:</label>
-				<input type="text" name="name" value="" />
-				<input type="submit" value="Submit next Player name" />
+				<input type="text" name="name" value="" required/>
+				<input type="submit" id="nameSubmit" value="Submit next Player name"/>
 			</form>
+			<div id="stateLabel">
+			</div>
 		</div>
 	</div>
 </body>
 <script type="text/javascript">
+	var socket;
 	function lostConnection() {
 		console.error('lost Connection');
 		document.getElementById('lostConnection').hidden = false;
+		socket.close()
 	}
 	function reconnectedSensor() {
 		const msg = document.getElementById('reconnectedSensor');
@@ -52,26 +57,109 @@
 			window.location.replace(location.origin + "?m=setup")
 	}
 	function game() {
+		lostSensor = document.getElementById('lostSensor');
+		nameSubmit = document.getElementById('nameSubmit');
+		startGameFirst = document.getElementById('startGameFirst');
+		stateLabel = document.getElementById('stateLabel');
+		lastList = document.getElementById('lastList');
+		topList = document.getElementById('topList');
 		document.getElementById('game').hidden = false;
 		//const socket = new WebSocket('ws://' + location.host + '/API/game');
-		const socket = new WebSocket('ws://' + "192.168.4.1:5000" + '/API/game');
+		socket = new WebSocket('ws://' + "192.168.4.1:5000" + '/API/game');
 		timeout = setTimeout(lostConnection, 1000);
 		socket.addEventListener('message', ev => {
 			clearTimeout(timeout);
 			socket.send('.');
 			timeout = setTimeout(lostConnection, 1000);
 			data = JSON.parse(ev.data);
-			console.log(data);
+			//console.log(data);
+			switch(data["systemStateMachine"]) {
+				case 1:
+					stateLabel.innerHTML = "waiting for name";
+					break;
+				case 2:
+					stateLabel.innerHTML = "waiting for start";
+					break;
+				case 3:
+					stateLabel.innerHTML = "game running";
+					break;
+				case 0:
+				default:
+					// code block
+			} 
 			if (data["systemMode"] == -1) {
-				if (document.getElementById('lostSensor').hidden == true) {
-					document.getElementById('lostSensor').hidden = false;
+				if (lostSensor.hidden == true) {
+					lostSensor.hidden = false;
 					console.error("lost connection to sensor")
 				}
 			}
 			else {
-				if (document.getElementById('lostSensor').hidden == false) {
-					document.getElementById('lostSensor').hidden = true;
+				if (lostSensor.hidden == false) {
+					lostSensor.hidden = true;
 					reconnectedSensor()
+				}
+			}
+			if (data["systemMode"] == 0 || data["systemStateMachine"] == 0) {
+				if (startGameFirst.hidden == true) {
+					startGameFirst.hidden = false;
+				}
+			}
+			else {
+				if (startGameFirst.hidden == false) {
+					startGameFirst.hidden = true;
+				}
+			}
+			if (data["systemStateMachine"] == 1) {
+				if (nameSubmit.disabled == true) {
+					nameSubmit.disabled = false;
+					//fetch('/API/playerlist')
+					fetch('http://192.168.4.1:5000/API/playerlist')
+					.then(response => {
+						if (!response.ok) {
+							throw new Error("HTTP error " + response.status);
+						}
+						return response.json();
+					})
+					.then(list => {
+						//console.log(list);
+						table = '<table>'
+						table += '<tr>'
+						table += '<th>Name:</th>'
+						table += '<th>Time:</th>'
+						table += '</tr>'
+						list.lastList.reverse().forEach(element => {
+							table += '<tr>'
+							table += '<td>' + element.name + '</td>'
+							table += '<td>' + element.time + '</td>'
+							table += '</tr>'
+						});
+						table += '</table>'
+						lastList.innerHTML = table
+
+						table = '<table>'
+						table += '<tr>'
+						table += '<th>#</th>'
+						table += '<th>Name:</th>'
+						table += '<th>Time:</th>'
+						table += '</tr>'
+						list.topList.forEach((element, n) => {
+							table += '<tr>'
+							table += '<td>' + String(n + 1) + '</td>'
+							table += '<td>' + element.name + '</td>'
+							table += '<td>' + element.time + '</td>'
+							table += '</tr>'
+						});
+						table += '</table>'
+						topList.innerHTML = table
+					})
+					.catch(function () {
+						this.dataError = true;
+					})
+				}
+			}
+			else {
+				if (nameSubmit.disabled == false) {
+					nameSubmit.disabled = true;
 				}
 			}
 		});
@@ -80,11 +168,15 @@
 			lostConnection()
 		});
 	}
+	function startGame() {
+		socket.close()
+		setTimeout(() => {window.location.replace(location.origin + "/action/startgame")}, 1500)
+	}
 	function setup() {
 		document.getElementById('setup').hidden = false;
 		div = document.getElementById('sensors');
 		//const socket = new WebSocket('ws://' + location.host + '/API/sensors');
-		const socket = new WebSocket('ws://' + "192.168.4.1:5000" + '/API/sensors');
+		socket = new WebSocket('ws://' + "192.168.4.1:5000" + '/API/sensors');
 		timeout = setTimeout(lostConnection, 1000);
 		socket.addEventListener('message', ev => {
 			clearTimeout(timeout);
