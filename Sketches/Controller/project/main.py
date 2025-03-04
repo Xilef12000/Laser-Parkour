@@ -178,6 +178,14 @@ def netInfo():
 async def index(request):
     return send_file('index.html')
 
+@app.route('/script.js')
+async def index(request):
+    return send_file('script.js')
+
+@app.route('/style.css')
+async def index(request):
+    return send_file('style.css')
+
 @app.route('/action/rescan')
 async def index(request):
     if systemMode == 0 or systemStateMachine <= 2:
