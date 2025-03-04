@@ -6,7 +6,6 @@
 	<title>Laser-Parkour</title>
 </head>
 <body>
-	<iframe hidden name="getframe" id="getframe"></iframe>
 	<div id="erros">
 		<div id="lostConnection" hidden style="color: red;">Lost connection</div>
 		<div id="lostSensor" hidden style="color: red;">Lost connection to one ore more sensors</div>
@@ -14,9 +13,7 @@
 		<div id="reconnectedSensor" hidden style="color: green;">Reconnected to all sensors</div>
 	</div>
 	<div hidden id="setup">
-		<form target="getframe" action="/action/rescan"  method="get">
-			<input type="submit" value="Rescan for Sensors" />
-		</form>	
+		<button type="button" onclick="rescan()">Rescan for Sensors</button> 
 		<button type="button" onclick="startGame()">start game</button> 
 		<div id="sensors"></div>
 	</div>
@@ -24,9 +21,9 @@
 		<div id="topList"></div>
 		<div id="lastList"></div>
 		<div id="next">
-			<form id="form" target="getframe" action="/action/name"  method="get">
+			<form onsubmit="submitName()" action="javascript:void(0);">
 				<label for="lname">Next name:</label>
-				<input type="text" name="name" value="" required/>
+				<input type="text" id="name" name="name" value="" required/>
 				<input type="submit" id="nameSubmit" value="Submit next Player name"/>
 			</form>
 			<div id="stateLabel">
@@ -35,11 +32,34 @@
 	</div>
 </body>
 <script type="text/javascript">
+	function rescan() {
+		fetch('http://192.168.4.1:5000/action/rescan')
+		.then(response => {
+			if (!response.ok) {
+				throw new Error("HTTP error " + response.status);
+			}
+		})
+		.catch(function () {
+			this.dataError = true;
+		})
+	}
+	function submitName() {
+		fetch('http://192.168.4.1:5000/action/name?name=' + document.getElementById("name").value)
+		.then(response => {
+			if (!response.ok) {
+				throw new Error("HTTP error " + response.status);
+			}
+		})
+		.catch(function () {
+			this.dataError = true;
+		})
+	}
 	var socket;
 	function lostConnection() {
 		console.error('lost Connection');
 		document.getElementById('lostConnection').hidden = false;
 		socket.close()
+		setTimeout(function() {window.location.reload();}, 3000);
 	}
 	function reconnectedSensor() {
 		const msg = document.getElementById('reconnectedSensor');
@@ -61,8 +81,6 @@
 		nameSubmit = document.getElementById('nameSubmit');
 		startGameFirst = document.getElementById('startGameFirst');
 		stateLabel = document.getElementById('stateLabel');
-		lastList = document.getElementById('lastList');
-		topList = document.getElementById('topList');
 		document.getElementById('game').hidden = false;
 		//const socket = new WebSocket('ws://' + location.host + '/API/game');
 		socket = new WebSocket('ws://' + "192.168.4.1:5000" + '/API/game');
@@ -87,7 +105,7 @@
 				default:
 					// code block
 			} 
-			if (data["systemMode"] == -1) {
+			if (data["sensorState"] == -1) {
 				if (lostSensor.hidden == true) {
 					lostSensor.hidden = false;
 					console.error("lost connection to sensor")
@@ -112,49 +130,7 @@
 			if (data["systemStateMachine"] == 1) {
 				if (nameSubmit.disabled == true) {
 					nameSubmit.disabled = false;
-					//fetch('/API/playerlist')
-					fetch('http://192.168.4.1:5000/API/playerlist')
-					.then(response => {
-						if (!response.ok) {
-							throw new Error("HTTP error " + response.status);
-						}
-						return response.json();
-					})
-					.then(list => {
-						//console.log(list);
-						table = '<table>'
-						table += '<tr>'
-						table += '<th>Name:</th>'
-						table += '<th>Time:</th>'
-						table += '</tr>'
-						list.lastList.reverse().forEach(element => {
-							table += '<tr>'
-							table += '<td>' + element.name + '</td>'
-							table += '<td>' + element.time + '</td>'
-							table += '</tr>'
-						});
-						table += '</table>'
-						lastList.innerHTML = table
-
-						table = '<table>'
-						table += '<tr>'
-						table += '<th>#</th>'
-						table += '<th>Name:</th>'
-						table += '<th>Time:</th>'
-						table += '</tr>'
-						list.topList.forEach((element, n) => {
-							table += '<tr>'
-							table += '<td>' + String(n + 1) + '</td>'
-							table += '<td>' + element.name + '</td>'
-							table += '<td>' + element.time + '</td>'
-							table += '</tr>'
-						});
-						table += '</table>'
-						topList.innerHTML = table
-					})
-					.catch(function () {
-						this.dataError = true;
-					})
+					fetchPlayerlist();
 				}
 			}
 			else {
@@ -167,6 +143,53 @@
 			console.log('<<< closed');
 			lostConnection()
 		});
+		fetchPlayerlist();
+	}
+	function fetchPlayerlist() {
+		fetch('http://192.168.4.1:5000/API/playerlist')
+		.then(response => {
+			if (!response.ok) {
+				throw new Error("HTTP error " + response.status);
+			}
+			return response.json();
+		})
+		.then(list => {
+			lastList = document.getElementById('lastList');
+			topList = document.getElementById('topList');
+			//console.log(list);
+			table = '<table>'
+			table += '<tr>'
+			table += '<th>Name:</th>'
+			table += '<th>Time:</th>'
+			table += '</tr>'
+			list.lastList.reverse().forEach(element => {
+				table += '<tr>'
+				table += '<td>' + element.name + '</td>'
+				table += '<td>' + element.time + '</td>'
+				table += '</tr>'
+			});
+			table += '</table>'
+			lastList.innerHTML = table
+
+			table = '<table>'
+			table += '<tr>'
+			table += '<th>#</th>'
+			table += '<th>Name:</th>'
+			table += '<th>Time:</th>'
+			table += '</tr>'
+			list.topList.forEach((element, n) => {
+				table += '<tr>'
+				table += '<td>' + String(n + 1) + '</td>'
+				table += '<td>' + element.name + '</td>'
+				table += '<td>' + element.time + '</td>'
+				table += '</tr>'
+			});
+			table += '</table>'
+			topList.innerHTML = table
+		})
+		.catch(function () {
+			this.dataError = true;
+		})
 	}
 	function startGame() {
 		socket.close()

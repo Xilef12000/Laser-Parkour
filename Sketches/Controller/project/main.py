@@ -16,13 +16,15 @@ import json
 app = Microdot()
 
 # mode and statemachine
-systemMode = 0 # 0:config 1:game -10:config error -1:sensor disconnected
+systemMode = 0 # 0:config 1:game
 systemStateMachine = 0 # 0:noGame 1:awaitName 2:awaitStart 3:awaitEnd
+sensorState = 0 # 0:all ok -10:config error -1:sensor disconnected
 
 lastList = []
 topList = []
 
 sensors = []
+sensorsCount = 0
 class Sensor:
     address = 0
     deviceType = 0
@@ -50,8 +52,9 @@ class Sensor:
         except OSError as error:
             self.conStatus -= 1
             if self.conStatus < -5:
-                global systemMode
-                systemMode = -1
+                global sensorState
+                if sensorState == 0:
+                    sensorState = -1
     def getValue(self):
         self.readValue()
         return self.value
@@ -116,11 +119,12 @@ def init():
     scanBus()
 
 def scanBus():
-    global systemMode
-    systemMode = 0
     global sensors
     global startSensor
     global endSensor
+    global sensorState
+    if sensorState == -10:
+        sensorState = 0
     sensors = []
     startSensor = None
     endSensor = None
@@ -138,19 +142,19 @@ def scanBus():
             if sensor.deviceType == 2:
                 if startSensor != None:
                     print("more then one startSensor found")
-                    systemMode = -10
+                    sensorState = -10
                 startSensor = sensor
             elif sensor.deviceType == 3:
                 if endSensor != None:
                     print("more then one endSensor found")
-                    systemMode = -10
+                    sensorState = -10
                 endSensor = sensor
     if startSensor == None:
         print("no startSensor found")
-        systemMode = -10
+        sensorState = -10
     if endSensor == None:
         print("no endSensor found")
-        systemMode = -10       
+        sensorState = -10       
     for sensor in sensors:
         sensor.setMode(1)
         
@@ -176,7 +180,7 @@ async def index(request):
 
 @app.route('/action/rescan')
 async def index(request):
-    if systemMode <= 0:
+    if systemMode == 0 or systemStateMachine <= 2:
         scanBus()
         return'scanning'
     else:
@@ -185,8 +189,9 @@ async def index(request):
 @app.route('/action/name')
 async def index(request):
     global systemStateMachine
+    global sensorState
     #print(parse_qs(urlparse('?' + request.query_string).query))
-    if systemStateMachine == 1:
+    if systemStateMachine == 1 and sensorState == 0:
         global nextName
         nextName = parse_qs(urlparse('?' + request.query_string).query)['name'][0]
         systemStateMachine = 2
@@ -197,9 +202,10 @@ async def index(request):
 @app.route('/action/startgame')
 async def index(request):
     global systemMode
-    global systemStateMachine
-    if systemMode == 0:
+    global sensorState
+    if systemMode == 0 and sensorState == 0:
         systemMode = 1
+        global systemStateMachine
         systemStateMachine = 1
         return redirect('/?m=game', status_code=303)
     else:
@@ -237,10 +243,12 @@ async def api(request, ws):
 async def api(request, ws):
     global systemMode
     global systemStateMachine
+    global sensorState
     while True:
         data = {}
         data['systemMode'] = systemMode
         data['systemStateMachine'] = systemStateMachine
+        data['sensorState'] = sensorState
         response = json.dumps(data)
         led.single('g', 255)
         await ws.send(response)
@@ -258,17 +266,25 @@ async def main() :
         led.single('b', 255)
         for sensor in sensors:
             sensor.readValue()
+        global systemStateMachine
         global systemMode
-        if systemMode == -1:
-            errcount = 0
-            for sensor in sensors:
-                if sensor.conStatus != 1:
-                    errcount = 1
-            if errcount == 0:
-                systemMode = 0
+        if systemStateMachine <= 2 or systemMode == 0:
+            global sensorState
+            if sensorState == -1:
+                global sensorsCount
+                if len(sensors) > sensorsCount:
+                    sensorsCount = len(sensors)
+                print(sensorsCount)
+                global i2c
+                foundAdresses = i2c.scan()
+                print(len(foundAdresses))
+                if sensorsCount == len(foundAdresses):
+                    scanBus()
+                    if len(sensors) == sensorsCount:
+                        sensorState = 0
         led.single('b', 0)
-        await asyncio.sleep(0.1)   # Sleep for 0.1 seconds  
-        
+        await asyncio.sleep(0.1)   # Sleep for 0.1 seconds
+    
 if __name__=="__main__":
     if not checkForWap():
         createWap()
