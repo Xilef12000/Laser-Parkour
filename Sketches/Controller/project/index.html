@@ -8,21 +8,25 @@
 	<title>Laser-Parkour</title>
 </head>
 <body onload="onload()">
-	<div id="erros">
-		<div id="lostConnection" hidden style="color: red;">Lost connection</div>
-		<div id="lostSensor" hidden style="color: red;">Lost connection to one ore more sensors</div>
-		<div id="startGameFirst" hidden style="color: red;">System not ready, please <a href="/action/startgame">start the game first</a></div>
-		<div id="reconnectedSensor" hidden style="color: green;">Reconnected to all sensors</div>
+	<div id="errors" class="errors">
+		<div id="lostConnection" hidden class="message red">Lost connection</div>
+		<div id="lostSensor" hidden class="message yellow">Lost connection to one ore more sensors</div>
+		<div id="startGameFirst" hidden class="message red">System not ready, please <a href="/action/startgame">start the game first</a></div>
+		<div id="reconnectedSensor" hidden class="message green">Reconnected to all sensors</div>
 	</div>
-	<div hidden id="setup">
+	<div hidden id="setup" class="container">
 		<button type="button" onclick="rescan()">Rescan for Sensors</button> 
-		<button type="button" onclick="startGame()">start game</button> 
+		<button type="button" onclick="startGame()">start game</button>
+		<br/>
+		<br/>
 		<div id="sensors"></div>
 	</div>
-	<div hidden id="game">
-		<div id="topList"></div>
-		<div id="lastList"></div>
-		<div id="next">
+	<div hidden id="game" class="container">
+		<div class="lists">
+			<div id="topList" class="toplist"></div>
+			<div id="lastList" class="lastlist"></div>
+		</div>
+		<div id="next" class="next">
 			<form onsubmit="submitName()" action="javascript:void(0);">
 				<label for="lname">Next name:</label>
 				<input type="text" id="name" name="name" value="" required/>

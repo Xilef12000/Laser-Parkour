@@ -5,6 +5,7 @@ import network
 from sys import exit
 from microdot import Microdot, send_file, abort, redirect
 from microdot.websocket import with_websocket
+from microdot.cors import CORS
 import uasyncio as asyncio
 from urllib.parse import urlparse, parse_qs
 from rgb_led import rgb_led
@@ -14,6 +15,7 @@ import json
 
 
 app = Microdot()
+cors = CORS(app, allowed_origins=['http://127.0.0.1:8000'], allow_credentials=True) # for web-debugging
 
 # mode and statemachine
 systemMode = 0 # 0:config 1:game
@@ -105,14 +107,14 @@ def init():
                 totalTime = deltatime + interrupted * penalty
                 global lastList
                 lastList.append({'name': nextName, 'time': totalTime, 'delta': deltatime, 'interrupted': interrupted})
-                if len(lastList) > 3:
+                if len(lastList) > 10:
                     lastList.pop(0)
                 global topList
                 topList.append({'name': nextName, 'time': totalTime, 'delta': deltatime, 'interrupted': interrupted})
                 def sortkey(e):
                     return e['time']
                 topList.sort(key=sortkey)
-                if len(topList) > 3:
+                if len(topList) > 10:
                     topList.pop(-1)
                 systemStateMachine = 1
     open_drain.irq(trigger=Pin.IRQ_FALLING, handler=open_drain_handler)
