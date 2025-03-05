@@ -129,10 +129,14 @@ function fetchPlayerlist() {
         table += '<tr>'
         table += '<th>Name:</th>'
         table += '<th>Time:</th>'
+        table += '<th>Interrupted:</th>'
+        table += '<th>Total Time:</th>'
         table += '</tr>'
         list.lastList.reverse().forEach(element => {
             table += '<tr>'
             table += '<td>' + element.name + '</td>'
+            table += '<td>' + element.delta + '</td>'
+            table += '<td>' + element.interrupted + '</td>'
             table += '<td>' + element.time + '</td>'
             table += '</tr>'
         });
@@ -144,11 +148,15 @@ function fetchPlayerlist() {
         table += '<th>#</th>'
         table += '<th>Name:</th>'
         table += '<th>Time:</th>'
+        table += '<th>Interrupted:</th>'
+        table += '<th>Total Time:</th>'
         table += '</tr>'
         list.topList.forEach((element, n) => {
             table += '<tr>'
             table += '<td>' + String(n + 1) + '</td>'
             table += '<td>' + element.name + '</td>'
+            table += '<td>' + element.delta + '</td>'
+            table += '<td>' + element.interrupted + '</td>'
             table += '<td>' + element.time + '</td>'
             table += '</tr>'
         });

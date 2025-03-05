@@ -7,15 +7,18 @@
 #define PIN 3
 #define LED 1
 #define OPENDRAIN PB4
-#define ADDR 0x10  // individual adress for each chip, starting with 0x08
+#define ADDR 0x12  // individual adress for each chip, starting with 0x08
 
 // EEPROM
 #define EEDEVTYPE 0x01
 #define EEDEVMODE 0x02
 
-uint16_t state = 0;
-uint8_t deviceType = 3;  // 0: undefined; 1: LDR Sensor; 2: start buzzer; 3: end buzzer
-uint8_t deviceMode = 0;  // 0: get type; 1: curent value
+uint16_t value = 0;
+uint8_t deviceType = 1;  // 0: undefined; 1: LDR Sensor; 2: start buzzer; 3: end buzzer
+uint8_t deviceMode = 0;  // 0: get type; 1: curent value 2: hit/miss
+uint16_t threshold = 240;
+boolean hit = 0;
+boolean hitold = 0;
 
 void setDeviceType(uint8_t t);
 void setDeviceMode(uint8_t m);
@@ -28,9 +31,7 @@ void setup() {
   Wire.onReceive(receiveEvent);
   switch (deviceType) {
     case 1:
-      while (true) {
-        pinMode(LED, OUTPUT);
-      }
+      pinMode(LED, OUTPUT);
       break;
     case 2:
     case 3:
@@ -46,21 +47,26 @@ void setup() {
   switch (deviceType) {
     case 1:
       while (true) {
-        state = (uint16_t)analogRead(APIN);
-        analogWrite(LED, map(state, 0, 1023, 0, 255));
-        delay(100);
+        //value = (uint16_t)analogRead(APIN);
+        value = ((uint16_t)analogRead(APIN) + 15 * value) / 16;
+        hit = value > threshold;
+        //analogWrite(LED, map(value, 0, 1023, 0, 255));
+        digitalWrite(LED, hit);
+        delay(10);
       }
       break;
     case 2:
     case 3:
       while (true) {
-        state = (uint16_t)digitalRead(PIN);
-        if (state == LOW) {
+        value = (uint16_t)digitalRead(PIN);
+        if (value == LOW) {
           digitalWrite(LED, LOW);
           DDRB |= (1 << OPENDRAIN);
+          hit = 1;
         } else {
           digitalWrite(LED, HIGH);
           DDRB &= ~(1 << OPENDRAIN);
+          hit = 0;
         }
       }
       break;
@@ -101,12 +107,28 @@ void requestEvent() {
         case 1:
         case 2:
         case 3:
-          uint16_t value = state;
+          uint16_t data = value;
           uint8_t arr[2];
-          arr[1] = value & 0xff;
-          arr[0] = (value >> 8);
+          arr[1] = data & 0xff;
+          arr[0] = (data >> 8);
           Wire.write(arr[0]);
           Wire.write(arr[1]);
+          break;
+      }
+      break;
+    case 2:
+      switch (deviceType) {
+        default:
+        case 0:
+        case 255:
+          break;
+        case 1:
+          Wire.write(hit & ~hitold);
+          hitold = hit;
+          break;
+        case 2:
+        case 3:
+          Wire.write(hit);
           break;
       }
       break;

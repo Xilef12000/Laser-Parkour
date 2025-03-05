@@ -20,6 +20,8 @@ systemMode = 0 # 0:config 1:game
 systemStateMachine = 0 # 0:noGame 1:awaitName 2:awaitStart 3:awaitEnd
 sensorState = 0 # 0:all ok -10:config error -1:sensor disconnected
 
+penalty = 10 # penalty per interrupt in seconds
+
 lastList = []
 topList = []
 
@@ -55,8 +57,19 @@ class Sensor:
                 global sensorState
                 if sensorState == 0:
                     sensorState = -1
-    def getValue(self):
-        self.readValue()
+    def readHit(self):
+        try:
+            data = i2c.readfrom(self.address, 1, True)
+            self.conStatus = 1
+            self.value = int.from_bytes(data, 'big')
+        except OSError as error:
+            self.conStatus -= 1
+            if self.conStatus < -5:
+                global sensorState
+                if sensorState == 0:
+                    sensorState = -1
+    def getHit(self):
+        self.readHit()
         return self.value
 
 def init():
@@ -77,28 +90,30 @@ def init():
         global systemStateMachine
         if systemStateMachine == 2:
             global startSensor
-            if startSensor.getValue() == 0:
+            if startSensor.getHit() == 1:
                 global startTime
                 startTime = tempTime
                 systemStateMachine = 3
         elif systemStateMachine == 3:
             global endSensor
-            if endSensor.getValue() == 0:
+            if endSensor.getHit() == 1:
                 global endTime
                 endTime = tempTime
                 global startTime
-                totalTime = (endTime - startTime)*1e-9
+                deltatime = (endTime - startTime)*1e-9
+                global interrupted
+                totalTime = deltatime + interrupted * penalty
                 global lastList
-                lastList.append({'name': nextName, 'time': totalTime})
+                lastList.append({'name': nextName, 'time': totalTime, 'delta': deltatime, 'interrupted': interrupted})
                 if len(lastList) > 3:
                     lastList.pop(0)
                 global topList
-                topList.append({'name': nextName, 'time': totalTime})
+                topList.append({'name': nextName, 'time': totalTime, 'delta': deltatime, 'interrupted': interrupted})
                 def sortkey(e):
                     return e['time']
                 topList.sort(key=sortkey)
                 if len(topList) > 3:
-                    topList.pop(0)
+                    topList.pop(-1)
                 systemStateMachine = 1
     open_drain.irq(trigger=Pin.IRQ_FALLING, handler=open_drain_handler)
     # roraty encoder config
@@ -203,6 +218,8 @@ async def index(request):
         global nextName
         nextName = parse_qs(urlparse('?' + request.query_string).query)['name'][0]
         systemStateMachine = 2
+        global interrupted
+        interrupted = 0
         return nextName
     else:
         return abort(428, 'system not ready')
@@ -213,6 +230,8 @@ async def index(request):
     global sensorState
     if systemMode == 0 and sensorState == 0:
         systemMode = 1
+        for sensor in sensors:
+            sensor.setMode(2)
         global systemStateMachine
         systemStateMachine = 1
         return redirect('/?m=game', status_code=303)
@@ -233,7 +252,10 @@ async def api(request, ws):
     global systemStateMachine
     global sensors
     while True:
-        systemMode = 0
+        if systemMode == 1:
+            for sensor in sensors:
+                sensor.setMode(1)
+            systemMode = 0
         systemStateMachine = 0
         response = '['
         for sensor in sensors:
@@ -270,12 +292,22 @@ async def startWeb():
       
 async def main() :
     asyncio.create_task(startWeb())
+    global systemMode
+    global sensors
+    global systemStateMachine
+    global systemMode
     while True:
         led.single('b', 255)
-        for sensor in sensors:
-            sensor.readValue()
-        global systemStateMachine
-        global systemMode
+        if systemMode == 1:
+            for sensor in sensors:
+                sensor.readHit()
+                if sensor.value == 1 and sensor.deviceType == 1 and systemStateMachine == 3:
+                    global interrupted
+                    interrupted += 1
+                    print("interrupted " + str(hex(sensor.address)))
+        elif systemMode == 0:
+            for sensor in sensors:
+                sensor.readValue()
         if systemStateMachine <= 2 or systemMode == 0:
             global sensorState
             if sensorState == -1:
