@@ -23,6 +23,7 @@ systemStateMachine = 0 # 0:noGame 1:awaitName 2:awaitStart 3:awaitEnd
 sensorState = 0 # 0:all ok -10:config error -1:sensor disconnected
 
 penalty = 10 # penalty per interrupt in seconds
+threshold = 240
 
 lastList = []
 topList = []
@@ -223,6 +224,17 @@ async def index(request):
         global interrupted
         interrupted = 0
         return nextName
+    else:
+        return abort(428, 'system not ready')
+
+@app.route('/action/threshold')
+async def index(request):
+    global sensorState
+    if systemMode == 0:
+        global threshold
+        if request.query_string:
+            threshold = parse_qs(urlparse('?' + request.query_string).query)['threshold'][0]
+        return str(threshold)
     else:
         return abort(428, 'system not ready')
 

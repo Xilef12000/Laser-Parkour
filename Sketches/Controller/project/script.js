@@ -174,6 +174,29 @@ function startGame() {
 function setup() {
     document.getElementById('setup').hidden = false;
     div = document.getElementById('sensors');
+    thresholdrange = document.getElementById("thresholdrange");
+    thresholdnumber = document.getElementById('thresholdnumber')
+    thresholdrange.addEventListener("change",(e)=>{
+        thresholdnumber.value = e.target.value;
+    })
+    thresholdnumber.addEventListener("change",(e)=>{
+        thresholdrange.value = e.target.value;
+    })
+    fetch('http://192.168.4.1:5000/action/threshold')
+    .then(response => {
+        if (!response.ok) {
+            throw new Error("HTTP error " + response.status);
+        }
+        return response.text()
+    })
+    .then(data => {
+        console.log(response);
+        thresholdrange.value = response;
+        thresholdnumber.value = 40;
+    })
+    .catch(function () {
+        this.dataError = true;
+    })
     //const socket = new WebSocket('ws://' + location.host + '/API/sensors');
     socket = new WebSocket('ws://' + "192.168.4.1:5000" + '/API/sensors');
     timeout = setTimeout(lostConnection, 1000);
