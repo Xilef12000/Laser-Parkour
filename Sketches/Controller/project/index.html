@@ -21,7 +21,7 @@
 		<br/>
 		<div id="sensors"></div>
 		<br/>
-		<form action="javascript:void(0);">
+		<form onsubmit="submitThreshold()" action="javascript:void(0);" class="threshold">
 			<input type="range" id="thresholdrange" value="" min="0" max="1023"/>
 			<input type="number" id="thresholdnumber" value="" min="0" max="1023"/>
 			<input type="submit" id="applythreshold" value="apply value"/>

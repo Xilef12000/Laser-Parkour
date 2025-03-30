@@ -198,3 +198,13 @@ h6 {
 	width: calc(100vw - 6rem);
 	border-radius: 0.28rem;
 }
+.threshold .yellow {
+	color: var(--color-red);
+	font-weight: bold;
+}
+.sensorTable .red {
+	color: var(--color-red);
+}
+.sensorTable .green {
+	color: var(--color-green);
+}

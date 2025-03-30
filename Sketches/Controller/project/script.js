@@ -1,4 +1,5 @@
 var socket;
+var threshold = 0;
 function onload() {
     switch(new URLSearchParams(location.search).get("m")) {
         case "game":
@@ -33,6 +34,25 @@ function submitName() {
         this.dataError = true;
     })
 }
+function submitThreshold() {
+    fetch('http://192.168.4.1:5000/action/threshold?threshold=' + document.getElementById("thresholdnumber").value)
+    .then(response => {
+        if (!response.ok) {
+            throw new Error("HTTP error " + response.status);
+        }
+        return response.text()
+    })
+    .then(data => {
+        threshold = data;
+        console.log(threshold);
+        thresholdrange.value = threshold;
+        thresholdnumber.value = threshold;
+        document.getElementById('applythreshold').classList.remove("yellow");
+    })
+    .catch(function () {
+        this.dataError = true;
+    })
+}
 function lostConnection() {
     console.error('lost Connection');
     document.getElementById('lostConnection').hidden = false;
@@ -52,11 +72,11 @@ function game() {
     document.getElementById('game').hidden = false;
     //const socket = new WebSocket('ws://' + location.host + '/API/game');
     socket = new WebSocket('ws://' + "192.168.4.1:5000" + '/API/game');
-    timeout = setTimeout(lostConnection, 1000);
+    timeout = setTimeout(lostConnection, 3000);
     socket.addEventListener('message', ev => {
         clearTimeout(timeout);
         socket.send('.');
-        timeout = setTimeout(lostConnection, 1000);
+        timeout = setTimeout(lostConnection, 3000);
         data = JSON.parse(ev.data);
         //console.log(data);
         switch(data["systemStateMachine"]) {
@@ -177,10 +197,14 @@ function setup() {
     thresholdrange = document.getElementById("thresholdrange");
     thresholdnumber = document.getElementById('thresholdnumber')
     thresholdrange.addEventListener("change",(e)=>{
-        thresholdnumber.value = e.target.value;
+        threshold = e.target.value;
+        thresholdnumber.value = threshold;
+        document.getElementById('applythreshold').classList.add("yellow");
     })
     thresholdnumber.addEventListener("change",(e)=>{
-        thresholdrange.value = e.target.value;
+        threshold = e.target.value;
+        thresholdrange.value = threshold;
+        document.getElementById('applythreshold').classList.add("yellow");
     })
     fetch('http://192.168.4.1:5000/action/threshold')
     .then(response => {
@@ -190,21 +214,22 @@ function setup() {
         return response.text()
     })
     .then(data => {
-        console.log(response);
-        thresholdrange.value = response;
-        thresholdnumber.value = 40;
+        threshold = data;
+        console.log(threshold);
+        thresholdrange.value = threshold;
+        thresholdnumber.value = threshold;
     })
     .catch(function () {
         this.dataError = true;
     })
     //const socket = new WebSocket('ws://' + location.host + '/API/sensors');
     socket = new WebSocket('ws://' + "192.168.4.1:5000" + '/API/sensors');
-    timeout = setTimeout(lostConnection, 1000);
+    timeout = setTimeout(lostConnection, 3000);
     socket.addEventListener('message', ev => {
         clearTimeout(timeout);
         socket.send('.');
-        timeout = setTimeout(lostConnection, 1000);
-        table = '<table>'
+        timeout = setTimeout(lostConnection, 3000);
+        table = '<table class="sensorTable">'
             
             table += '<tr>'
                 table += '<th>Addr</th>'
@@ -226,7 +251,23 @@ function setup() {
                     table += '<td>' + data[i].address + '</td>'
                     table += '<td>' + data[i].deviceType + '</td>'
                     table += '<td>' + data[i].deviceMode + '</td>'
-                    table += '<td>' + data[i].value + '</td>'
+                    if (data[i].deviceType == 1) {
+                        if (data[i].value > threshold) {
+                            table += '<td class="red">'
+                        }
+                        else {
+                            table += '<td class="green">'
+                        }
+                    }
+                    else {
+                        if (data[i].value == 1) {
+                            table += '<td class="green">'
+                        }
+                        else {
+                            table += '<td class="red">'
+                        }
+                    }
+                    table += data[i].value + '</td>'
                     table += '<td>' + data[i].conStatus + '</td>'
                     table += '</tr>'
                 }	

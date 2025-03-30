@@ -17,8 +17,10 @@ uint16_t value = 0;
 uint8_t deviceType = 1;  // 0: undefined; 1: LDR Sensor; 2: start buzzer; 3: end buzzer
 uint8_t deviceMode = 0;  // 0: get type; 1: curent value 2: hit/miss
 uint16_t threshold = 240;
-boolean hit = 0;
-boolean hitold = 0;
+bool hit = 0;
+bool hitold = 0;
+bool nextI2CThreshold = 0;
+uint8_t thresholdMSB = 0;
 
 void setDeviceType(uint8_t t);
 void setDeviceMode(uint8_t m);
@@ -82,13 +84,22 @@ void receiveEvent() {
   uint8_t r = Wire.read();
   uint8_t t = (r >> 4);
   uint8_t d = (r & 0b00001111);
-  switch (t) {
-    case 0b0001:
-      setDeviceMode(d);
-      break;
-    case 0b0010:
-      setDeviceType(d);
-      break;
+  if (nextI2CThreshold) {
+    threshold = (thresholdMSB << 8) | r;
+    nextI2CThreshold = 0;
+  } else {
+    switch (t) {
+      case 0b0001:
+        setDeviceMode(d);
+        break;
+      case 0b0010:
+        setDeviceType(d);
+        break;
+      case 0b0100:
+        thresholdMSB = d;
+        nextI2CThreshold = 1;
+        break;
+    }
   }
 }
 void requestEvent() {

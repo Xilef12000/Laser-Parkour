@@ -49,6 +49,11 @@ class Sensor:
     def setType(self, type):
         i2c.writeto(self.address, bytearray([0b00100000 + type]), True)
         self.deviceType = type
+    def setThreshold(self, threshold):
+        i2c.writeto(self.address, bytearray([0b01000000 + (threshold >> 8)]), True)
+        i2c.writeto(self.address, bytearray([threshold & 0b0000000011111111]), True)
+        #i2c.writeto(self.address, bytearray([0b01001111]), True)
+        #i2c.writeto(self.address, bytearray([0b10101010]), True)
     def readValue(self):
         try:
             data = i2c.readfrom(self.address, 2, True)
@@ -87,7 +92,7 @@ def init():
     global led
     led = rgb_led(7,8,9,500)
     # open_drain
-    open_drain = Pin(18, Pin.IN, Pin.PULL_UP)
+    open_drain = Pin(19, Pin.IN, Pin.PULL_UP)
     def open_drain_handler(pin):
         tempTime = time_ns()
         global systemStateMachine
@@ -175,6 +180,8 @@ def scanBus():
         sensorState = -10       
     for sensor in sensors:
         sensor.setMode(1)
+    for sensor in sensors:
+        sensor.setThreshold(threshold)
         
 def createWap():
     rp2.country('DE')
@@ -233,7 +240,12 @@ async def index(request):
     if systemMode == 0:
         global threshold
         if request.query_string:
-            threshold = parse_qs(urlparse('?' + request.query_string).query)['threshold'][0]
+            data = int(parse_qs(urlparse('?' + request.query_string).query)['threshold'][0])
+            if data <= 1023 and data >= 0:
+                threshold = data
+            for sensor in sensors:
+                sensor.setThreshold(threshold)
+            print(threshold)
         return str(threshold)
     else:
         return abort(428, 'system not ready')
