@@ -81,6 +81,10 @@ class Sensor:
         return self.value
 
 def init():
+    # buzzer
+    global buzzer
+    buzzer = Pin(5, Pin.OUT)
+    buzzer.off()
     # init LCD
     lcd = I2cLcd(I2C(1, sda=14, scl=15, freq=100000), 0x27, 2, 16)
     # init Menu
@@ -99,12 +103,14 @@ def init():
         if systemStateMachine == 2:
             global startSensor
             if startSensor.getHit() == 1:
+                asyncio.create_task(beep())
                 global startTime
                 startTime = tempTime
                 systemStateMachine = 3
         elif systemStateMachine == 3:
             global endSensor
             if endSensor.getHit() == 1:
+                asyncio.create_task(beep())
                 global endTime
                 endTime = tempTime
                 global startTime
@@ -315,6 +321,12 @@ async def api(request, ws):
     
 async def startWeb():
     await app.run(debug=True)
+
+async def beep():
+    global buzzer
+    buzzer.on()
+    await asyncio.sleep_ms(200)
+    buzzer.off()
       
 async def main() :
     asyncio.create_task(startWeb())
@@ -331,6 +343,7 @@ async def main() :
                     global interrupted
                     interrupted += 1
                     print("interrupted " + str(hex(sensor.address)))
+                    asyncio.create_task(beep())
         elif systemMode == 0:
             for sensor in sensors:
                 sensor.readValue()
