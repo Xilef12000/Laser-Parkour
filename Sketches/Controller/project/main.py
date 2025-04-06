@@ -81,6 +81,13 @@ class Sensor:
         return self.value
 
 def init():
+    # led config
+    global led
+    led = rgb_led(7,8,9,500)
+    led.color("yellow")
+    global ledb
+    ledb = machine.Pin("LED", machine.Pin.OUT)
+    ledb.off()
     # buzzer
     global buzzer
     buzzer = Pin(5, Pin.OUT)
@@ -92,9 +99,6 @@ def init():
     menu = menu(lcd)
     menu.add_entry("", "Laser-Parcour")
     menu.show()
-    # led config
-    global led
-    led = rgb_led(7,8,9,500)
     # open_drain
     open_drain = Pin(19, Pin.IN, Pin.PULL_UP)
     def open_drain_handler(pin):
@@ -107,6 +111,7 @@ def init():
                 global startTime
                 startTime = tempTime
                 systemStateMachine = 3
+                led.color("green")
         elif systemStateMachine == 3:
             global endSensor
             if endSensor.getHit() == 1:
@@ -129,6 +134,7 @@ def init():
                 if len(topList) > 10:
                     topList.pop(-1)
                 systemStateMachine = 1
+                led.color("blue")
     open_drain.irq(trigger=Pin.IRQ_FALLING, handler=open_drain_handler)
     # roraty encoder config
     rotary = Rotary(11, 13, 12)
@@ -237,6 +243,7 @@ async def index(request):
         global nextName
         nextName = parse_qs(urlparse('?' + request.query_string).query)['name'][0]
         systemStateMachine = 2
+        led.color("cyan")
         global interrupted
         interrupted = 0
         return nextName
@@ -269,6 +276,7 @@ async def index(request):
             sensor.setMode(2)
         global systemStateMachine
         systemStateMachine = 1
+        led.color("blue")
         return redirect('/?m=game', status_code=303)
     else:
         return redirect('/?m=setup', status_code=303)
@@ -287,6 +295,7 @@ async def api(request, ws):
     global systemStateMachine
     global sensors
     while True:
+        led.color("pink")
         if systemMode == 1:
             for sensor in sensors:
                 sensor.setMode(1)
@@ -297,10 +306,8 @@ async def api(request, ws):
             response += str(sensor).replace("'", '"') + ','
         response = response[:-1]
         response += ']'
-        led.single('g', 255)
         await ws.send(response)
         await ws.receive()
-        led.single('g', 0)
         await asyncio.sleep(0.5)
 
 @app.route('/API/game')
@@ -315,10 +322,8 @@ async def api(request, ws):
         data['systemStateMachine'] = systemStateMachine
         data['sensorState'] = sensorState
         response = json.dumps(data)
-        led.single('g', 255)
         await ws.send(response)
         await ws.receive()
-        led.single('g', 0)
         await asyncio.sleep(0.5)
 
     
@@ -333,6 +338,7 @@ async def beep():
       
 async def main() :
     asyncio.create_task(startWeb())
+    led.color("pink")
     global systemMode
     global sensors
     global systemStateMachine
@@ -340,7 +346,7 @@ async def main() :
     global sensorState
     global lostSensorsMsg
     while True:
-        led.single('b', 255)
+        ledb.on()
         if systemMode == 1:
             for sensor in sensors:
                 if sensor.skip == 0:
@@ -350,14 +356,17 @@ async def main() :
                         interrupted += 1
                         print("interrupted " + str(hex(sensor.address)))
                         asyncio.create_task(beep())
-            if sensorState == -1 and lostSensorsMsg == 0:
-                print("lost sensors")
-                lostSensorsMsg = 1
+            if sensorState == -1:
+                led.color("orange")
+                if lostSensorsMsg == 0:
+                    print("lost sensors")
+                    lostSensorsMsg = 1
         elif systemMode == 0:
             for sensor in sensors:
                 sensor.readValue()
         if systemStateMachine <= 2 or systemMode == 0:
             if sensorState == -1:
+                led.color("red")
                 if lostSensorsMsg == 0:
                     print("lost sensors")
                     lostSensorsMsg = 1
@@ -369,6 +378,7 @@ async def main() :
                 foundAdresses = i2c.scan()
                 #print(len(foundAdresses))
                 if sensorsCount == len(foundAdresses):
+                    led.color("yellow")
                     scanBus()
                     if len(sensors) == sensorsCount:
                         if systemMode == 1:
@@ -377,7 +387,13 @@ async def main() :
                                 sensor.skip = 0
                         sensorState = 0
                         lostSensorsMsg = 0
-        led.single('b', 0)
+                        if systemStateMachine == 1:
+                            led.color("blue")
+                        elif systemStateMachine == 2:
+                            led.color("cyan")
+                        if systemMode == 0:
+                            led.color("pink")
+        ledb.off()
         await asyncio.sleep(0.1)   # Sleep for 0.1 seconds
     
 if __name__=="__main__":
