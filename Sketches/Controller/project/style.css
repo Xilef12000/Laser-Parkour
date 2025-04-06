@@ -208,3 +208,7 @@ h6 {
 .sensorTable .green {
 	color: var(--color-green);
 }
+.gotoSetup {
+	position: relative;
+	top: -1rem;
+}

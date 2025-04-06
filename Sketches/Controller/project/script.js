@@ -12,6 +12,9 @@ function onload() {
             window.location.replace(location.origin + "?m=setup")
     }
 }
+function gotoSetup() {
+    window.location.replace(location.origin + "?m=setup")
+}
 function rescan() {
     fetch('http://192.168.4.1:5000/action/rescan')
     .then(response => {
