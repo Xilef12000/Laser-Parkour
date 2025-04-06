@@ -266,6 +266,20 @@ async def index(request):
     else:
         return abort(428, 'system not ready')
 
+@app.route('/action/penalty')
+async def index(request):
+    global sensorState
+    if systemMode == 0:
+        global penalty
+        if request.query_string:
+            data = float(parse_qs(urlparse('?' + request.query_string).query)['penalty'][0])
+            if data <= 240 and data >= 0:
+                penalty = data
+            print(penalty)
+        return str(penalty)
+    else:
+        return abort(428, 'system not ready')
+
 @app.route('/action/startgame')
 async def index(request):
     global systemMode
