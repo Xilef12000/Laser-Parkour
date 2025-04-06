@@ -36,6 +36,7 @@ class Sensor:
     deviceMode = 0
     conStatus = 1
     value = -1
+    skip = 0
     def __init__ (self, address):
         self.address = address
         self.setMode(0)
@@ -60,22 +61,21 @@ class Sensor:
             self.conStatus = 1
             self.value = int.from_bytes(data, 'big')
         except OSError as error:
-            self.conStatus -= 1
-            if self.conStatus < -5:
-                global sensorState
-                if sensorState == 0:
-                    sensorState = -1
+            self.error()
     def readHit(self):
         try:
             data = i2c.readfrom(self.address, 1, True)
             self.conStatus = 1
             self.value = int.from_bytes(data, 'big')
         except OSError as error:
-            self.conStatus -= 1
-            if self.conStatus < -5:
-                global sensorState
-                if sensorState == 0:
-                    sensorState = -1
+            self.error()
+    def error(self):
+        self.conStatus -= 1
+        if self.conStatus < -5:
+            global sensorState
+            if sensorState == 0:
+                sensorState = -1
+            self.skip = 1
     def getHit(self):
         self.readHit()
         return self.value
@@ -100,7 +100,7 @@ def init():
     def open_drain_handler(pin):
         tempTime = time_ns()
         global systemStateMachine
-        if systemStateMachine == 2:
+        if systemStateMachine == 2 and sensorState == 0:
             global startSensor
             if startSensor.getHit() == 1:
                 asyncio.create_task(beep())
@@ -146,6 +146,8 @@ def init():
     global i2c
     i2c = I2C(0,sda=Pin(16),scl=Pin(17),freq=4800) # set speed form 100000 to xxx
     scanBus()
+    global lostSensorsMsg
+    lostSensorsMsg = 0
 
 def scanBus():
     global sensors
@@ -186,6 +188,7 @@ def scanBus():
         sensorState = -10       
     for sensor in sensors:
         sensor.setMode(1)
+        sensor.skip = 0
     for sensor in sensors:
         sensor.setThreshold(threshold)
         
@@ -334,33 +337,46 @@ async def main() :
     global sensors
     global systemStateMachine
     global systemMode
+    global sensorState
+    global lostSensorsMsg
     while True:
         led.single('b', 255)
         if systemMode == 1:
             for sensor in sensors:
-                sensor.readHit()
-                if sensor.value == 1 and sensor.deviceType == 1 and systemStateMachine == 3:
-                    global interrupted
-                    interrupted += 1
-                    print("interrupted " + str(hex(sensor.address)))
-                    asyncio.create_task(beep())
+                if sensor.skip == 0:
+                    sensor.readHit()
+                    if sensor.value == 1 and sensor.deviceType == 1 and systemStateMachine == 3:
+                        global interrupted
+                        interrupted += 1
+                        print("interrupted " + str(hex(sensor.address)))
+                        asyncio.create_task(beep())
+            if sensorState == -1 and lostSensorsMsg == 0:
+                print("lost sensors")
+                lostSensorsMsg = 1
         elif systemMode == 0:
             for sensor in sensors:
                 sensor.readValue()
         if systemStateMachine <= 2 or systemMode == 0:
-            global sensorState
             if sensorState == -1:
+                if lostSensorsMsg == 0:
+                    print("lost sensors")
+                    lostSensorsMsg = 1
                 global sensorsCount
                 if len(sensors) > sensorsCount:
                     sensorsCount = len(sensors)
-                print(sensorsCount)
+                #print(sensorsCount)
                 global i2c
                 foundAdresses = i2c.scan()
-                print(len(foundAdresses))
+                #print(len(foundAdresses))
                 if sensorsCount == len(foundAdresses):
                     scanBus()
                     if len(sensors) == sensorsCount:
+                        if systemMode == 1:
+                            for sensor in sensors:
+                                sensor.setMode(2)
+                                sensor.skip = 0
                         sensorState = 0
+                        lostSensorsMsg = 0
         led.single('b', 0)
         await asyncio.sleep(0.1)   # Sleep for 0.1 seconds
     
